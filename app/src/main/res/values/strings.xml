@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Check penalties</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+    <string name="action_check">Check</string>
+    <string name="action_feedback">Send feedback</string>
+    <string name="action_rate">Rate app</string>
+    <string name="label_name">Name of the owner of the vehicle</string>
+    <string name="label_surname">Surname of the owner of the vehicle</string>
+    <string name="label_patronymic">Patronymic of the owner of the vehicle</string>
+    <string name="label_series">Series</string>
+    <string name="label_number">Number</string>
+    <string name="label_description">Description</string>
+    <string name="label_automatically">Automatic check</string>
+    <string name="hint_name">Petr</string>
+    <string name="hint_surname">Semenov</string>
+    <string name="hint_patronymic">Vasiljevich</string>
+    <string name="hint_series">MAA</string>
+    <string name="hint_number">123456</string>
+    <string name="label_addauto">Add car</string>
+    <string name="label_editauto">Edit car</string>
+    <string name="label_certificate">Certificate of vehicles registration:</string>
+    <string name="label_certificate_short">Certificate:</string>
+    <string name="dialog_deleteauto">Delete the car?</string>
+    <string name="label_lastupdate">Last update:</string>
+    <string name="label_never">never</string>
+</resources>

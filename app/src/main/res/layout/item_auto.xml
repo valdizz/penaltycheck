@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:leftEdgeSwipeOffset="0dp"
+    app:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/item_auto_edit"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:background="#009f0d"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:src="@android:drawable/ic_menu_edit" />
+
+        <ImageView
+            android:id="@+id/item_auto_delete"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:background="#ff0000"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:src="@android:drawable/ic_menu_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="56dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:src="@drawable/ic_refresh"
+                app:backgroundTint="@android:color/holo_green_dark"
+                app:fabSize="mini" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvFullname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KORNEV VLADISLAV VITALJEVICH"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCertificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_certificate_short"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skoda Superb 0854 IM-4 мой" />
+
+            <TextView
+                android:id="@+id/tvLastupdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/label_lastupdate"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.daimajia.swipe.SwipeLayout>

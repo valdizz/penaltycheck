@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Проверка штрафов</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_check">Проверить</string>
+    <string name="action_help">Помощь</string>
+    <string name="action_feedback">Отправить отзыв</string>
+    <string name="action_rate">Оценить приложение</string>
+    <string name="label_name">Имя владельца ТС</string>
+    <string name="label_surname">Фамилия владельца ТС</string>
+    <string name="label_series">Серия</string>
+    <string name="label_patronymic">Отчество владельца ТС</string>
+    <string name="label_number">Номер</string>
+    <string name="label_automatically">Автоматическая проверка</string>
+    <string name="label_description">Описание</string>
+    <string name="hint_name">Петр</string>
+    <string name="hint_surname">Семенов</string>
+    <string name="hint_patronymic">Васильевич</string>
+    <string name="hint_series">МАА</string>
+    <string name="hint_number">123456</string>
+    <string name="label_addauto">Добавить авто</string>
+    <string name="label_editauto">Редактировать авто</string>
+    <string name="label_certificate">Свидетельство о регистрации ТС:</string>
+    <string name="label_certificate_short">Свидетельство:</string>
+    <string name="dialog_deleteauto">Удалить авто?</string>
+    <string name="label_lastupdate">Последнее обновление:</string>
+    <string name="label_never">никогда</string>
+</resources>
