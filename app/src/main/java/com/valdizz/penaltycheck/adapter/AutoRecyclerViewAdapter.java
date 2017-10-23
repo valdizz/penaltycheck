@@ -1,6 +1,5 @@
 package com.valdizz.penaltycheck.adapter;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -11,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.valdizz.penaltycheck.AutoEditActivity;
+import com.valdizz.penaltycheck.PenaltyActivity;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.db.DataHelper;
 import com.valdizz.penaltycheck.model.Auto;
@@ -41,9 +44,23 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         holder.description.setText(auto.getDescription()+" / "+auto.getId());
         holder.lastupdate.setText(auto.getLastupdate()!=null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate)+auto.getLastupdate().toString() : " "+holder.itemView.getContext().getResources().getString(R.string.label_lastupdate)+" "+holder.itemView.getContext().getResources().getString(R.string.label_never));
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.item_auto_edit));
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.item_auto_delete));
+            }
+        });
+        holder.swipeLayout.getSurfaceView().setOnClickListener(new SwipeLayout.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.getContext().startActivity(new Intent(view.getContext(), PenaltyActivity.class).putExtra(DataHelper.AUTOID_PARAM, auto.getId()));
+            }
+        });
         holder.item_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                holder.swipeLayout.close(true);
                 new AlertDialog.Builder(view.getContext())
                         .setTitle(android.R.string.dialog_alert_title)
                         .setMessage(R.string.dialog_deleteauto)
@@ -66,7 +83,8 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         holder.item_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), AutoEditActivity.class).putExtra("auto_id", auto.getId()));
+                holder.swipeLayout.close(true);
+                view.getContext().startActivity(new Intent(view.getContext(), AutoEditActivity.class).putExtra(DataHelper.AUTOID_PARAM, auto.getId()));
             }
         });
     }

@@ -17,10 +17,14 @@ import com.daimajia.swipe.SwipeLayout;
 import com.valdizz.penaltycheck.adapter.AutoRecyclerViewAdapter;
 import com.valdizz.penaltycheck.db.DataHelper;
 import com.valdizz.penaltycheck.model.Auto;
+import com.valdizz.penaltycheck.model.Penalty;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmObject;
 
 public class AutoFragment extends Fragment {
 
@@ -35,6 +39,28 @@ public class AutoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        Auto auto = realm.where(Auto.class).equalTo("id", 3).findFirst();
+
+            Penalty penalty = realm.createObject(Penalty.class);
+            penalty.setNumber("123123");
+            penalty.setDate(new Date());
+            penalty.setChecked(true);
+            ((Auto)auto).getPenalties().add(penalty);
+            Penalty penalty2 = realm.createObject(Penalty.class);
+            penalty2.setNumber("555444");
+            penalty2.setDate(new Date());
+            penalty2.setChecked(true);
+            ((Auto)auto).getPenalties().add(penalty2);
+            Penalty penalty3 = realm.createObject(Penalty.class);
+            penalty3.setNumber("4646546");
+            penalty3.setDate(new Date());
+            penalty3.setChecked(false);
+            ((Auto)auto).getPenalties().add(penalty3);
+
+        realm.commitTransaction();
+
         View view = inflater.inflate(R.layout.fragment_auto, container, false);
         ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(swiperefreshListener);
@@ -52,27 +78,27 @@ public class AutoFragment extends Fragment {
     private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            //check operation
-            checkPenalty();
+            //check penalties for all autos
+            checkPenalties();
         }
     };
 
-    public void checkPenalty(){
+    public void checkPenalties(){
+        swipeRefreshLayout.setRefreshing(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(getView(), "Check action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(getView(), "Check penalties", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 swipeRefreshLayout.setRefreshing(false);
             }
         },2000);
     }
 
     private void setUpRecyclerView() {
-        adapter = new AutoRecyclerViewAdapter(realm.where(Auto.class).findAllAsync().sort("id"));
+        adapter = new AutoRecyclerViewAdapter(DataHelper.getAutos(realm));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        //recyclerView.setItemAnimator();
     }
 
 

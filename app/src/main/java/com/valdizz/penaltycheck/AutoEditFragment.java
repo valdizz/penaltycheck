@@ -1,6 +1,7 @@
 package com.valdizz.penaltycheck;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
@@ -19,8 +20,8 @@ import butterknife.OnClick;
 
 public class AutoEditFragment extends Fragment {
 
-    private static final String AUTOID_PARAM = "auto_id";
     private long auto_id;
+    private Auto auto;
     @BindView(R.id.etSurname) TextInputEditText etSurname;
     @BindView(R.id.etName) TextInputEditText etName;
     @BindView(R.id.etPatronymic) TextInputEditText etPatronymic;
@@ -35,7 +36,7 @@ public class AutoEditFragment extends Fragment {
     public static AutoEditFragment newInstance(long auto_id) {
         AutoEditFragment fragment = new AutoEditFragment();
         Bundle args = new Bundle();
-        args.putLong(AUTOID_PARAM, auto_id);
+        args.putLong(DataHelper.AUTOID_PARAM, auto_id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +45,7 @@ public class AutoEditFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            auto_id = getArguments().getLong(AUTOID_PARAM);
+            auto_id = getArguments().getLong(DataHelper.AUTOID_PARAM);
         }
     }
 
@@ -53,7 +54,7 @@ public class AutoEditFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_autoedit, container, false);
         ButterKnife.bind(this, view);
         if (auto_id != -1){
-            Auto auto = DataHelper.getAuto(auto_id);
+            auto = DataHelper.getAuto(auto_id);
             etSurname.setText(auto.getSurname());
             etName.setText(auto.getName());
             etPatronymic.setText(auto.getPatronymic());
@@ -67,20 +68,16 @@ public class AutoEditFragment extends Fragment {
 
     @OnClick(R.id.btnOk)
     public void saveAuto() {
-        Auto auto = new Auto();
+        //if auto with this certificate already exists
+        if (DataHelper.checkAuto(auto_id, etSeries.getText().toString(), etNumber.getText().toString())){
+            Snackbar.make(getView(), getString(R.string.dialog_autoexists), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
+
         if (auto_id != -1)
-            auto.setId(auto_id);
-        auto.setSurname(etSurname.getText().toString());
-        auto.setName(etName.getText().toString());
-        auto.setPatronymic(etPatronymic.getText().toString());
-        auto.setSeries(etSeries.getText().toString());
-        auto.setNumber(etNumber.getText().toString());
-        auto.setDescription(etDescription.getText().toString());
-        auto.setAutomatically(switchAutocheck.isChecked());
-        if (auto_id != -1)
-            DataHelper.updateAuto(auto);
+            DataHelper.updateAuto(auto_id, etSurname.getText().toString(), etName.getText().toString(), etPatronymic.getText().toString(), etSeries.getText().toString(), etNumber.getText().toString(), etDescription.getText().toString(), switchAutocheck.isChecked());
         else
-            DataHelper.createAuto(auto);
+            DataHelper.createAuto(etSurname.getText().toString(), etName.getText().toString(), etPatronymic.getText().toString(), etSeries.getText().toString(), etNumber.getText().toString(), etDescription.getText().toString(), switchAutocheck.isChecked());
         getActivity().finish();
     }
 

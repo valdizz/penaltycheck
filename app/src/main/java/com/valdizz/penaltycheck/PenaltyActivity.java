@@ -11,36 +11,49 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class AutoActivity extends AppCompatActivity {
+import com.valdizz.penaltycheck.db.DataHelper;
+
+public class PenaltyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auto);
+        setContentView(R.layout.activity_penalty);
 
-        addFragment();
+        setTitle(R.string.title_activity_penalty);
+        addFragment(getIntent().getLongExtra(DataHelper.AUTOID_PARAM, -1));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), AutoEditActivity.class).putExtra("auto_id", -1));
+                //check penalties of this auto
+                ((PenaltyFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_penalty)).checkPenalty();
             }
         });
     }
 
-    private void addFragment(){
+    private void addFragment(long auto_id){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_auto, new AutoFragment());
+        ft.replace(R.id.fragment_penalty, PenaltyFragment.newInstance(auto_id));
         ft.commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.action_check).setVisible(false);
         return true;
     }
 
@@ -48,10 +61,6 @@ public class AutoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_check:
-                //check penalties for all autos
-                ((AutoFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_auto)).checkPenalties();
-                return true;
             case R.id.action_help:
 
                 return true;
@@ -62,5 +71,4 @@ public class AutoActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

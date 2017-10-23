@@ -17,11 +17,16 @@
     <string name="hint_patronymic">Vasiljevich</string>
     <string name="hint_series">MAA</string>
     <string name="hint_number">123456</string>
-    <string name="label_addauto">Add car</string>
-    <string name="label_editauto">Edit car</string>
+    <string name="title_activity_addauto">Add car</string>
+    <string name="title_activity_editauto">Edit car</string>
     <string name="label_certificate">Certificate of vehicles registration:</string>
     <string name="label_certificate_short">Certificate:</string>
     <string name="dialog_deleteauto">Delete the car?</string>
     <string name="label_lastupdate">Last update:</string>
     <string name="label_never">never</string>
+    <string name="dialog_autoexists">Auto with this certificate already exists!</string>
+    <string name="title_activity_penalty">Penalty</string>
+    <string name="label_resolutionnumber">Number of Resolution:</string>
+    <string name="label_penaltydate">Date and time of the offense:</string>
+    <string name="dialog_deletepenalty">Delete penalty?</string>
 </resources>

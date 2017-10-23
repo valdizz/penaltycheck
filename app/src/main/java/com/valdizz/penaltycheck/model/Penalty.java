@@ -33,4 +33,9 @@ public class Penalty extends RealmObject {
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
+
+    @Override
+    public String toString() {
+        return this.getNumber()+"/"+this.getDate()+"/"+this.isChecked();
+    }
 }

@@ -4,6 +4,7 @@
     android:id="@+id/swipe_auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:clickToClose="true"
     app:leftEdgeSwipeOffset="0dp"
     app:rightEdgeSwipeOffset="0dp">
 
@@ -14,21 +15,19 @@
 
         <ImageView
             android:id="@+id/item_auto_edit"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:background="#009f0d"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@android:drawable/ic_menu_edit" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_action_edit" />
 
         <ImageView
             android:id="@+id/item_auto_delete"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:background="#ff0000"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:src="@android:drawable/ic_menu_delete" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_action_trash" />
     </LinearLayout>
 
     <LinearLayout

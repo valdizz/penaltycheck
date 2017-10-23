@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.valdizz.penaltycheck.db.DataHelper;
+
 
 public class AutoEditActivity extends AppCompatActivity{
 
@@ -15,9 +17,9 @@ public class AutoEditActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autoedit);
-        long auto_id = getIntent().getLongExtra("auto_id", -1);
-        setTitle(auto_id != -1 ? R.string.label_editauto : R.string.label_addauto);
 
+        long auto_id = getIntent().getLongExtra(DataHelper.AUTOID_PARAM, -1);
+        setTitle(auto_id != -1 ? R.string.title_activity_editauto : R.string.title_activity_addauto);
         addFragment(auto_id);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,8 +36,7 @@ public class AutoEditActivity extends AppCompatActivity{
 
     private void addFragment(long auto_id){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        AutoEditFragment autoEditFragment = AutoEditFragment.newInstance(auto_id);
-        ft.replace(R.id.fragment_autoedit, autoEditFragment);
+        ft.replace(R.id.fragment_autoedit, AutoEditFragment.newInstance(auto_id));
         ft.commit();
     }
 
