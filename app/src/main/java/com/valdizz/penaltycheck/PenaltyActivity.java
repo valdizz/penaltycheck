@@ -10,20 +10,40 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.valdizz.penaltycheck.db.DataHelper;
+import com.valdizz.penaltycheck.model.Auto;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PenaltyActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.tvPFullname) TextView tvPFullname;
+    @BindView(R.id.tvPCertificate) TextView tvPCertificate;
+    @BindView(R.id.tvPDescription) TextView tvPDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_penalty);
 
-        setTitle(R.string.title_activity_penalty);
+        ButterKnife.bind(this);
+        setupToolbar(getIntent().getLongExtra(DataHelper.AUTOID_PARAM, -1));
         addFragment(getIntent().getLongExtra(DataHelper.AUTOID_PARAM, -1));
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    @OnClick(R.id.fab)
+    void checkPenalty(){
+        ((PenaltyFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_penalty)).checkPenalty();
+    }
+
+    private void setupToolbar(long auto_id){
+        setTitle(R.string.title_activity_penalty);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -34,14 +54,10 @@ public class PenaltyActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //check penalties of this auto
-                ((PenaltyFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_penalty)).checkPenalty();
-            }
-        });
+        Auto auto = DataHelper.getAuto(auto_id);
+        tvPFullname.setText(auto.getSurname()+" "+auto.getName()+" "+auto.getPatronymic());
+        tvPCertificate.setText(getString(R.string.label_certificate_short)+" "+auto.getSeries()+" "+auto.getNumber());
+        tvPDescription.setText(auto.getDescription());
     }
 
     private void addFragment(long auto_id){

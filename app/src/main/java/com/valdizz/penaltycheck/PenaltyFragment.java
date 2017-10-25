@@ -8,14 +8,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.valdizz.penaltycheck.adapter.PenaltyRecyclerViewAdapter;
 import com.valdizz.penaltycheck.db.DataHelper;
-import com.valdizz.penaltycheck.model.Auto;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +25,6 @@ public class PenaltyFragment extends Fragment {
     private Realm realm;
     private PenaltyRecyclerViewAdapter padapter;
     @BindView(R.id.recyclerview_penalty) RecyclerView penaltyRecyclerView;
-    @BindView(R.id.swiperefresh_penalty) SwipeRefreshLayout penaltySwipeRefreshLayout;
 
     public PenaltyFragment() {
     }
@@ -53,8 +50,7 @@ public class PenaltyFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         View view = inflater.inflate(R.layout.fragment_penalty, container, false);
         ButterKnife.bind(this, view);
-        penaltySwipeRefreshLayout.setOnRefreshListener(penaltySwiperefreshListener);
-        setUpPenaltyRecyclerView(auto_id);
+        setupPenaltyRecyclerView(auto_id);
         return view;
     }
 
@@ -65,26 +61,16 @@ public class PenaltyFragment extends Fragment {
         realm.close();
     }
 
-    private SwipeRefreshLayout.OnRefreshListener penaltySwiperefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            //check penalties of this auto
-            checkPenalty();
-        }
-    };
-
     public void checkPenalty(){
-        penaltySwipeRefreshLayout.setRefreshing(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Snackbar.make(getView(), "Check penalty", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                penaltySwipeRefreshLayout.setRefreshing(false);
             }
         },2000);
     }
 
-    private void setUpPenaltyRecyclerView(long auto_id) {
+    private void setupPenaltyRecyclerView(long auto_id) {
         padapter = new PenaltyRecyclerViewAdapter(DataHelper.getPenalties(realm, auto_id));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setAutoMeasureEnabled(true);

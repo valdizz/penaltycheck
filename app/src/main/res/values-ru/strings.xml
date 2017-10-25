@@ -23,11 +23,13 @@
     <string name="label_certificate">Свидетельство о регистрации ТС:</string>
     <string name="label_certificate_short">Свидетельство:</string>
     <string name="dialog_deleteauto">Удалить авто?</string>
-    <string name="label_lastupdate">Последнее обновление:</string>
+    <string name="label_lastupdate">Обновлено:</string>
+    <string name="label_penalties">Штрафы:</string>
     <string name="label_never">никогда</string>
     <string name="dialog_autoexists">Авто с этим сертификатом уже существует!</string>
     <string name="label_resolutionnumber">Номер постановления:</string>
-    <string name="label_penaltydate">Дата и время правонарушения:</string>
+    <string name="label_penaltydate">Дата правонарушения:</string>
     <string name="title_activity_penalty">Штрафы</string>
     <string name="dialog_deletepenalty">Удалить штраф?</string>
+    <string name="dialog_controlauto">Фамилия, имя, серия и номер свидетельства о регистрации должны быть заполнены!</string>
 </resources>

@@ -1,127 +1,158 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/default_padding_16"
-    tools:context="com.valdizz.penaltycheck.AutoEditFragment">
+    android:layout_height="match_parent">
 
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="100">
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding_16"
+        tools:context="com.valdizz.penaltycheck.AutoEditFragment">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etSurname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapCharacters"
-            android:hint="@string/label_surname" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="100">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapCharacters"
-            android:hint="@string/label_name" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="100">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etPatronymic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapCharacters"
-            android:hint="@string/label_patronymic" />
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:text="@string/label_certificate"
-        android:textSize="12sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingRight="@dimen/default_padding_16"
             app:counterEnabled="true"
-            app:counterMaxLength="3">
+            app:counterMaxLength="50">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/etSeries"
+                android:id="@+id/etSurname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
+                android:hint="@string/label_surname"
                 android:inputType="textCapCharacters"
-                android:hint="@string/label_series" />
+                android:maxLength="50" />
         </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             app:counterEnabled="true"
-            app:counterMaxLength="6">
+            app:counterMaxLength="50">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/etNumber"
+                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0dp"
-                android:inputType="number"
-                android:hint="@string/label_number" />
+                android:hint="@string/label_name"
+                android:inputType="textCapCharacters"
+                android:maxLength="50" />
         </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="300">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etDescription"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:hint="@string/label_description" />
-    </android.support.design.widget.TextInputLayout>
+            app:counterEnabled="true"
+            app:counterMaxLength="50">
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switchAutocheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_padding_16"
-        android:paddingBottom="@dimen/default_padding_16"
-        android:text="@string/label_automatically" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etPatronymic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_patronymic"
+                android:inputType="textCapCharacters"
+                android:maxLength="50" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_padding_16"
-        android:layout_gravity="right"
-        android:text="@android:string/ok"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding_4"
+            android:text="@string/label_certificate"
+            android:textSize="12sp" />
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingRight="@dimen/default_padding_16"
+                app:counterEnabled="true"
+                app:counterMaxLength="3">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etSeries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_series"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="3"
+                    android:nextFocusRight="@+id/etNumber"
+                    android:imeOptions="actionNext"
+                    android:paddingTop="0dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:counterEnabled="true"
+                app:counterMaxLength="6">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_number"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingTop="0dp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:counterEnabled="true"
+            app:counterMaxLength="100">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_description"
+                android:inputType="textCapSentences"
+                android:maxLength="100" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switchAutocheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/default_padding_16"
+            android:paddingTop="@dimen/default_padding_16"
+            android:text="@string/label_automatically" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancel"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding_16"
+                android:text="@android:string/cancel" />
+
+            <Button
+                android:id="@+id/btnOk"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding_16"
+                android:text="@android:string/ok" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

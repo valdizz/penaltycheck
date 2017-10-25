@@ -15,10 +15,14 @@ import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.db.DataHelper;
 import com.valdizz.penaltycheck.model.Penalty;
 
+import java.text.SimpleDateFormat;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder>{
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm:ss");
 
     public PenaltyRecyclerViewAdapter(OrderedRealmCollection<Penalty> data) {
         super(data, true);
@@ -34,7 +38,7 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
     public void onBindViewHolder(PenaltyViewHolder holder, int position) {
         final Penalty penalty = getItem(position);
         holder.resolutionnumber.setText(penalty.getNumber());
-        holder.penaltydate.setText(penalty.getDate().toString());
+        holder.penaltydate.setText(dateFormat.format(penalty.getDate()));
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         holder.item_delete.setOnClickListener(new View.OnClickListener() {
             @Override

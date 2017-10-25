@@ -74,11 +74,34 @@ public class AutoEditFragment extends Fragment {
             return;
         }
 
+        //check field completion
+        if (etSurname.getText().length()==0 || etName.getText().length()==0 || etSeries.getText().length()==0 || etNumber.getText().length()==0){
+            Snackbar.make(getView(), getString(R.string.dialog_controlauto), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            return;
+        }
+
         if (auto_id != -1)
-            DataHelper.updateAuto(auto_id, etSurname.getText().toString(), etName.getText().toString(), etPatronymic.getText().toString(), etSeries.getText().toString(), etNumber.getText().toString(), etDescription.getText().toString(), switchAutocheck.isChecked());
+            DataHelper.updateAuto(auto_id,
+                    etSurname.getText().toString().toUpperCase(),
+                    etName.getText().toString().toUpperCase(),
+                    etPatronymic.getText().toString().toUpperCase(),
+                    etSeries.getText().toString().toUpperCase(),
+                    etNumber.getText().toString().toUpperCase(),
+                    etDescription.getText().toString(),
+                    switchAutocheck.isChecked());
         else
-            DataHelper.createAuto(etSurname.getText().toString(), etName.getText().toString(), etPatronymic.getText().toString(), etSeries.getText().toString(), etNumber.getText().toString(), etDescription.getText().toString(), switchAutocheck.isChecked());
+            DataHelper.createAuto(etSurname.getText().toString(),
+                    etName.getText().toString().toUpperCase(),
+                    etPatronymic.getText().toString().toUpperCase(),
+                    etSeries.getText().toString().toUpperCase(),
+                    etNumber.getText().toString().toUpperCase(),
+                    etDescription.getText().toString(),
+                    switchAutocheck.isChecked());
         getActivity().finish();
     }
 
+    @OnClick(R.id.btnCancel)
+    public void cancel() {
+        getActivity().finish();
+    }
 }

@@ -22,11 +22,13 @@
     <string name="label_certificate">Certificate of vehicles registration:</string>
     <string name="label_certificate_short">Certificate:</string>
     <string name="dialog_deleteauto">Delete the car?</string>
-    <string name="label_lastupdate">Last update:</string>
+    <string name="label_lastupdate">Updated:</string>
+    <string name="label_penalties">Penalties:</string>
     <string name="label_never">never</string>
     <string name="dialog_autoexists">Auto with this certificate already exists!</string>
     <string name="title_activity_penalty">Penalty</string>
     <string name="label_resolutionnumber">Number of Resolution:</string>
-    <string name="label_penaltydate">Date and time of the offense:</string>
+    <string name="label_penaltydate">Date of the offense:</string>
     <string name="dialog_deletepenalty">Delete penalty?</string>
+    <string name="dialog_controlauto">Surname, name, series and number of registration certificate must be filled!</string>
 </resources>

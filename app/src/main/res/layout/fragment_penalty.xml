@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swiperefresh_penalty"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_penalty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/default_padding_8"
-        android:paddingLeft="@dimen/default_padding_16"
-        android:paddingRight="@dimen/default_padding_16"
-        android:paddingTop="@dimen/default_padding_8" />
-</android.support.v4.widget.SwipeRefreshLayout>
+<android.support.v7.widget.RecyclerView android:id="@+id/recyclerview_penalty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/default_padding_8"
+    android:paddingLeft="@dimen/default_padding_16"
+    android:paddingRight="@dimen/default_padding_16"
+    android:paddingTop="@dimen/default_padding_8"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
 
 

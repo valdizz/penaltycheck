@@ -40,26 +40,26 @@ public class AutoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         realm = Realm.getDefaultInstance();
 
-        realm.beginTransaction();
-        Auto auto = realm.where(Auto.class).equalTo("id", 3).findFirst();
-
-            Penalty penalty = realm.createObject(Penalty.class);
-            penalty.setNumber("123123");
-            penalty.setDate(new Date());
-            penalty.setChecked(true);
-            ((Auto)auto).getPenalties().add(penalty);
-            Penalty penalty2 = realm.createObject(Penalty.class);
-            penalty2.setNumber("555444");
-            penalty2.setDate(new Date());
-            penalty2.setChecked(true);
-            ((Auto)auto).getPenalties().add(penalty2);
-            Penalty penalty3 = realm.createObject(Penalty.class);
-            penalty3.setNumber("4646546");
-            penalty3.setDate(new Date());
-            penalty3.setChecked(false);
-            ((Auto)auto).getPenalties().add(penalty3);
-
-        realm.commitTransaction();
+//        realm.beginTransaction();
+//        Auto auto = realm.where(Auto.class).equalTo("id", 3).findFirst();
+//
+//            Penalty penalty = realm.createObject(Penalty.class);
+//            penalty.setNumber("123123");
+//            penalty.setDate(new Date());
+//            penalty.setChecked(true);
+//            ((Auto)auto).getPenalties().add(penalty);
+//            Penalty penalty2 = realm.createObject(Penalty.class);
+//            penalty2.setNumber("555444");
+//            penalty2.setDate(new Date());
+//            penalty2.setChecked(true);
+//            ((Auto)auto).getPenalties().add(penalty2);
+//            Penalty penalty3 = realm.createObject(Penalty.class);
+//            penalty3.setNumber("4646546");
+//            penalty3.setDate(new Date());
+//            penalty3.setChecked(false);
+//            ((Auto)auto).getPenalties().add(penalty3);
+//
+//        realm.commitTransaction();
 
         View view = inflater.inflate(R.layout.fragment_auto, container, false);
         ButterKnife.bind(this, view);

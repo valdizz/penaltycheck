@@ -20,11 +20,15 @@ import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.db.DataHelper;
 import com.valdizz.penaltycheck.model.Auto;
 
+import java.text.SimpleDateFormat;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 
 public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, AutoRecyclerViewAdapter.AutoViewHolder> {
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm:ss");
 
     public AutoRecyclerViewAdapter(OrderedRealmCollection<Auto> data) {
         super(data, true);
@@ -39,10 +43,11 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
     @Override
     public void onBindViewHolder(final AutoViewHolder holder, final int position) {
         final Auto auto = getItem(position);
-        holder.fullname.setText(auto.getSurname()+" "+auto.getName()+" "+auto.getPatronymic());
-        holder.certificate.setText(holder.itemView.getContext().getResources().getString(R.string.label_certificate_short)+" "+auto.getSeries()+" "+auto.getNumber());
-        holder.description.setText(auto.getDescription()+" / "+auto.getId());
-        holder.lastupdate.setText(auto.getLastupdate()!=null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate)+auto.getLastupdate().toString() : " "+holder.itemView.getContext().getResources().getString(R.string.label_lastupdate)+" "+holder.itemView.getContext().getResources().getString(R.string.label_never));
+        holder.fullname.setText(auto.getSurname() + " " + auto.getName() + " " + auto.getPatronymic());
+        holder.certificate.setText(holder.itemView.getContext().getResources().getString(R.string.label_certificate_short) + " " + auto.getSeries() + " " + auto.getNumber());
+        holder.description.setText(auto.getDescription());
+        holder.lastupdate.setText(auto.getLastupdate() != null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + dateFormat.format(auto.getLastupdate()) : " " + holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + holder.itemView.getContext().getResources().getString(R.string.label_never));
+        holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
@@ -65,13 +70,13 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
                         .setTitle(android.R.string.dialog_alert_title)
                         .setMessage(R.string.dialog_deleteauto)
                         .setCancelable(true)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 DataHelper.deleteAuto(auto.getId());
                             }
                         })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
@@ -87,17 +92,19 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
                 view.getContext().startActivity(new Intent(view.getContext(), AutoEditActivity.class).putExtra(DataHelper.AUTOID_PARAM, auto.getId()));
             }
         });
+
     }
 
-    class AutoViewHolder extends RecyclerView.ViewHolder{
+    class AutoViewHolder extends RecyclerView.ViewHolder {
         SwipeLayout swipeLayout;
         TextView fullname;
         TextView certificate;
         TextView description;
         TextView lastupdate;
+        TextView penalties;
         ImageView item_delete, item_edit;
 
-        AutoViewHolder(View view){
+        AutoViewHolder(View view) {
             super(view);
             swipeLayout = (SwipeLayout) view.findViewById(R.id.swipe_auto);
             item_delete = (ImageView) view.findViewById(R.id.item_auto_delete);
@@ -106,6 +113,7 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
             certificate = (TextView) view.findViewById(R.id.tvCertificate);
             description = (TextView) view.findViewById(R.id.tvDescription);
             lastupdate = (TextView) view.findViewById(R.id.tvLastupdate);
+            penalties = (TextView) view.findViewById(R.id.tvPenalties);
         }
     }
 
