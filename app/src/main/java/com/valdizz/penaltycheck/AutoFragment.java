@@ -1,30 +1,22 @@
 package com.valdizz.penaltycheck;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.valdizz.penaltycheck.adapter.AutoRecyclerViewAdapter;
 import com.valdizz.penaltycheck.db.DataHelper;
-import com.valdizz.penaltycheck.model.Auto;
-import com.valdizz.penaltycheck.model.Penalty;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmObject;
 
 public class AutoFragment extends Fragment {
 
@@ -98,7 +90,6 @@ public class AutoFragment extends Fragment {
         adapter = new AutoRecyclerViewAdapter(DataHelper.getAutos(realm));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
 

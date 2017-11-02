@@ -3,14 +3,14 @@ package com.valdizz.penaltycheck.adapter;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.db.DataHelper;
 import com.valdizz.penaltycheck.model.Penalty;
@@ -22,7 +22,7 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder>{
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm:ss");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
 
     public PenaltyRecyclerViewAdapter(OrderedRealmCollection<Penalty> data) {
         super(data, true);
@@ -39,8 +39,15 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
         final Penalty penalty = getItem(position);
         holder.resolutionnumber.setText(penalty.getNumber());
         holder.penaltydate.setText(dateFormat.format(penalty.getDate()));
-        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-        holder.item_delete.setOnClickListener(new View.OnClickListener() {
+
+        holder.penalty_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 new AlertDialog.Builder(view.getContext())
@@ -62,20 +69,27 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
                         .show();
             }
         });
+        holder.payment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO payment methods
+            }
+        });
     }
 
     class PenaltyViewHolder extends RecyclerView.ViewHolder{
-        SwipeLayout swipeLayout;
-        TextView resolutionnumber;
-        TextView penaltydate;
-        ImageView item_delete;
+
+        CardView penalty_card;
+        TextView resolutionnumber, penaltydate;
+        ImageButton delete_button, payment_button;
 
         PenaltyViewHolder(View view){
             super(view);
-            swipeLayout = (SwipeLayout) view.findViewById(R.id.swipe_penalty);
-            item_delete = (ImageView) view.findViewById(R.id.item_penalty_delete);
-            resolutionnumber = (TextView) view.findViewById(R.id.tvResolutionNumber);
-            penaltydate = (TextView) view.findViewById(R.id.tvPenaltyDate);
+            penalty_card = (CardView) view.findViewById(R.id.penalty_card);
+            delete_button = (ImageButton) view.findViewById(R.id.delete_button);
+            payment_button = (ImageButton) view.findViewById(R.id.payment_button);
+            resolutionnumber = (TextView) view.findViewById(R.id.tv_resolutionnumber);
+            penaltydate = (TextView) view.findViewById(R.id.tv_penaltydate);
         }
     }
 }

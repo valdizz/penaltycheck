@@ -90,7 +90,7 @@ public class AutoEditFragment extends Fragment {
                     etDescription.getText().toString(),
                     switchAutocheck.isChecked());
         else
-            DataHelper.createAuto(etSurname.getText().toString(),
+            DataHelper.createAuto(etSurname.getText().toString().toUpperCase(),
                     etName.getText().toString().toUpperCase(),
                     etPatronymic.getText().toString().toUpperCase(),
                     etSeries.getText().toString().toUpperCase(),

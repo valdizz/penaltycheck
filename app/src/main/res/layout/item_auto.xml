@@ -1,114 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardView.Light"
+    android:id="@+id/auto_card"
+    app:cardCornerRadius="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:clickToClose="true"
-    app:leftEdgeSwipeOffset="0dp"
-    app:rightEdgeSwipeOffset="0dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
 
-    <LinearLayout
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/item_auto_edit"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/ic_action_edit" />
-
-        <ImageView
-            android:id="@+id/item_auto_delete"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/ic_action_trash" />
-    </LinearLayout>
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/default_padding_4"
-        android:paddingTop="@dimen/default_padding_4">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:minWidth="56dp">
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:src="@drawable/ic_refresh"
-                app:backgroundTint="@android:color/holo_green_dark"
-                app:fabSize="mini" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_fullname"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ellipsize="marquee"
+            android:maxLines="3"
+            android:scrollHorizontally="true"
+            android:textSize="@dimen/text_big"
+            android:textStyle="bold"
+            android:textColor="@color/textDark"
+            tools:text="KOTOV VLADISLAV VASILJEVICH"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/auto_image" />
 
-            <TextView
-                android:id="@+id/tvFullname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="KORNEV VLADISLAV VITALJEVICH"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_certificate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            android:textColor="@color/textGray"
+            tools:text="Сертификат: СВА 123456"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fullname"
+            app:layout_constraintStart_toStartOf="@+id/tv_fullname"
+            app:layout_constraintEnd_toEndOf="@+id/tv_fullname" />
 
-            <TextView
-                android:id="@+id/tvCertificate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_certificate_short"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/textGray"
+            tools:text="Skoda Superb 1515 IM-7 мой лучший автос"
+            app:layout_constraintTop_toBottomOf="@+id/auto_image"
+            app:layout_constraintStart_toStartOf="@+id/tv_certificate"
+            app:layout_constraintEnd_toEndOf="@+id/auto_image" />
 
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="Skoda Superb 0854 IM-4 мой" />
+        <ImageView
+            android:id="@+id/auto_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/empty_car"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/default_padding_4">
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundButton"
+            android:padding="@dimen/button_padding"
+            android:alpha="0.54"
+            app:layout_constraintEnd_toStartOf="@+id/edit_button"
+            app:layout_constraintTop_toTopOf="@+id/edit_button"
+            app:srcCompat="@drawable/ic_action_trash" />
 
-                <TextView
-                    android:id="@+id/tvPenalties"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="@string/label_penalties"
-                    android:textSize="@dimen/text_small" />
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundButton"
+            android:padding="@dimen/button_padding"
+            android:alpha="0.54"
+            app:layout_constraintEnd_toStartOf="@+id/reload_button"
+            app:layout_constraintTop_toTopOf="@+id/reload_button"
+            app:srcCompat="@drawable/ic_action_edit" />
 
-                <TextView
-                    android:id="@+id/tvLastupdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="@string/label_lastupdate"
-                    android:textSize="@dimen/text_small" />
-            </LinearLayout>
+        <ImageButton
+            android:id="@+id/reload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundButton"
+            android:padding="@dimen/button_padding"
+            android:alpha="0.54"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:srcCompat="@drawable/ic_action_reload" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_penalties"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/label_penalties"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_description"
+            app:layout_constraintBottom_toTopOf="@+id/tv_lastupdate" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_lastupdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/label_lastupdate"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_description" />
 
-</com.daimajia.swipe.SwipeLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
