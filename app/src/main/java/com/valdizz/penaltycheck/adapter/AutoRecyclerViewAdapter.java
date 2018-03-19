@@ -1,7 +1,8 @@
 package com.valdizz.penaltycheck.adapter;
 
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +13,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.valdizz.penaltycheck.AutoEditActivity;
-import com.valdizz.penaltycheck.PenaltyActivity;
 import com.valdizz.penaltycheck.R;
-import com.valdizz.penaltycheck.db.DataHelper;
-import com.valdizz.penaltycheck.model.Auto;
+import com.valdizz.penaltycheck.model.entity.Auto;
+import com.valdizz.penaltycheck.model.entity.Penalty;
+import com.valdizz.penaltycheck.util.ImageUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -27,6 +31,7 @@ import io.realm.RealmRecyclerViewAdapter;
 public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, AutoRecyclerViewAdapter.AutoViewHolder> {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
+    private OnAutoClickListener autoClickListener;
 
     public AutoRecyclerViewAdapter(OrderedRealmCollection<Auto> data) {
         super(data, true);
@@ -45,14 +50,29 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         holder.certificate.setText(holder.itemView.getContext().getResources().getString(R.string.label_certificate_short) + " " + auto.getSeries() + " " + auto.getNumber());
         holder.description.setText(auto.getDescription());
         holder.lastupdate.setText(auto.getLastupdate() != null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + dateFormat.format(auto.getLastupdate()) : "" + holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + holder.itemView.getContext().getResources().getString(R.string.label_never));
-        holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
+        if (getNewPenalties(auto.getPenalties()) > 0) {
+            holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size()) + " / " + holder.itemView.getContext().getResources().getString(R.string.label_new_penalties) + " " + getNewPenalties(auto.getPenalties()));
+            holder.penalties.setTextColor(Color.RED);
+        }
+        else {
+            holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
+        }
+        if (auto.getImage().length > 0) {
+            holder.auto_image.setImageBitmap(ImageUtil.convertBytesToImage(auto.getImage()));
+        }
+        else {
+            holder.auto_image.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.empty_car));
+        }
 
+        //get penalties for this auto
         holder.auto_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), PenaltyActivity.class).putExtra(DataHelper.AUTOID_PARAM, auto.getId()));
+                autoClickListener.getPenaltiesClick(auto.getId());
             }
         });
+
+        //delete auto
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +83,7 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataHelper.deleteAuto(auto.getId());
+                                autoClickListener.deleteAutoClick(auto.getId());
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -75,41 +95,54 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
                         .show();
             }
         });
+
+        //edit auto
         holder.edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), AutoEditActivity.class).putExtra(DataHelper.AUTOID_PARAM, auto.getId()));
+                autoClickListener.editAutoClick(auto.getId());
             }
         });
-        holder.reload_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //check penalty
+
+    }
+
+    private int getNewPenalties(List<Penalty> penalties){
+        int sum = 0;
+        for (Penalty penalty : penalties){
+            if (!penalty.isChecked()){
+                sum++;
             }
-        });
+        }
+        return sum;
     }
 
     class AutoViewHolder extends RecyclerView.ViewHolder {
 
-        CardView auto_card;
-        TextView fullname, certificate, description, lastupdate, penalties;
-        ImageButton delete_button, edit_button, reload_button;
-        ImageView auto_image;
+        @BindView(R.id.auto_card) CardView auto_card;
+        @BindView(R.id.tv_fullname) TextView fullname;
+        @BindView(R.id.tv_certificate) TextView certificate;
+        @BindView(R.id.tv_description) TextView description;
+        @BindView(R.id.tv_lastupdate) TextView lastupdate;
+        @BindView(R.id.tv_penalties) TextView penalties;
+        @BindView(R.id.delete_button)ImageButton delete_button;
+        @BindView(R.id.edit_button) ImageButton edit_button;
+        @BindView(R.id.auto_image) ImageView auto_image;
 
         AutoViewHolder(View view) {
             super(view);
-            auto_card = (CardView)view.findViewById(R.id.auto_card);
-            delete_button = (ImageButton) view.findViewById(R.id.delete_button);
-            edit_button = (ImageButton) view.findViewById(R.id.edit_button);
-            reload_button = (ImageButton) view.findViewById(R.id.reload_button);
-            fullname = (TextView) view.findViewById(R.id.tv_fullname);
-            certificate = (TextView) view.findViewById(R.id.tv_certificate);
-            description = (TextView) view.findViewById(R.id.tv_description);
-            lastupdate = (TextView) view.findViewById(R.id.tv_lastupdate);
-            penalties = (TextView) view.findViewById(R.id.tv_penalties);
-            auto_image = (ImageView) view.findViewById(R.id.auto_image);
+            ButterKnife.bind(this, view);
         }
     }
 
+    public void setAutoClickListener(OnAutoClickListener onAutoClickListener){
+        autoClickListener = onAutoClickListener;
+    }
+
+    public interface OnAutoClickListener {
+
+        void editAutoClick(long id);
+        void deleteAutoClick(long id);
+        void getPenaltiesClick(long id);
+    }
 
 }

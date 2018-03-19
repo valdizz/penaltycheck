@@ -18,71 +18,72 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_fullname"
+            android:id="@+id/tv_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ellipsize="marquee"
-            android:maxLines="3"
+            android:singleLine="true"
             android:scrollHorizontally="true"
             android:textSize="@dimen/text_big"
             android:textStyle="bold"
             android:textColor="@color/textDark"
-            tools:text="KOTOV VLADISLAV VASILJEVICH"
+            tools:text="Skoda Oktavia Combi 1414IM7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/auto_image" />
+
+        <TextView
+            android:id="@+id/tv_fullname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:scrollHorizontally="true"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            android:textColor="@color/textGray"
+            tools:text="КОТОВИЧ ВАСИЛИЙ ВАЛЕРЬЕВИЧ"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintStart_toStartOf="@+id/tv_description"
+            app:layout_constraintEnd_toEndOf="@+id/tv_description" />
 
         <TextView
             android:id="@+id/tv_certificate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:maxLines="1"
             android:scrollHorizontally="true"
-            android:textSize="@dimen/text_medium"
-            android:textStyle="bold"
+            android:singleLine="true"
             android:textColor="@color/textGray"
-            tools:text="Сертификат: СВА 123456"
+            android:textSize="@dimen/text_medium"
             app:layout_constraintTop_toBottomOf="@+id/tv_fullname"
             app:layout_constraintStart_toStartOf="@+id/tv_fullname"
-            app:layout_constraintEnd_toEndOf="@+id/tv_fullname" />
-
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:textSize="@dimen/text_medium"
-            android:textColor="@color/textGray"
-            tools:text="Skoda Superb 1515 IM-7 мой лучший автос"
-            app:layout_constraintTop_toBottomOf="@+id/auto_image"
-            app:layout_constraintStart_toStartOf="@+id/tv_certificate"
-            app:layout_constraintEnd_toEndOf="@+id/auto_image" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_fullname"
+            tools:text="Сертификат: СВА 123123" />
 
         <ImageView
             android:id="@+id/auto_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:src="@drawable/empty_car"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/empty_car"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundButton"
-            android:padding="@dimen/button_padding"
+            android:background="@null"
+            android:padding="4dp"
             android:alpha="0.54"
             app:layout_constraintEnd_toStartOf="@+id/edit_button"
             app:layout_constraintTop_toTopOf="@+id/edit_button"
@@ -92,42 +93,33 @@
             android:id="@+id/edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundButton"
-            android:padding="@dimen/button_padding"
-            android:alpha="0.54"
-            app:layout_constraintEnd_toStartOf="@+id/reload_button"
-            app:layout_constraintTop_toTopOf="@+id/reload_button"
-            app:srcCompat="@drawable/ic_action_edit" />
-
-        <ImageButton
-            android:id="@+id/reload_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/backgroundButton"
-            android:padding="@dimen/button_padding"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:padding="4dp"
             android:alpha="0.54"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description"
-            app:srcCompat="@drawable/ic_action_reload" />
+            app:layout_constraintTop_toBottomOf="@+id/auto_image"
+            app:srcCompat="@drawable/ic_action_edit" />
 
         <TextView
             android:id="@+id/tv_penalties"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@string/label_penalties"
             android:textSize="@dimen/text_small"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_description"
-            app:layout_constraintBottom_toTopOf="@+id/tv_lastupdate" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_lastupdate"
+            app:layout_constraintStart_toStartOf="@+id/tv_lastupdate"
+            tools:text="@string/label_penalties" />
 
         <TextView
             android:id="@+id/tv_lastupdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@string/label_lastupdate"
+            android:layout_marginBottom="8dp"
             android:textSize="@dimen/text_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_description" />
+            app:layout_constraintStart_toStartOf="@+id/tv_certificate"
+            tools:text="@string/label_lastupdate" />
 
     </android.support.constraint.ConstraintLayout>
 

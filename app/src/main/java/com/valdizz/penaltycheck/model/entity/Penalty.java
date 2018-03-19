@@ -1,4 +1,4 @@
-package com.valdizz.penaltycheck.model;
+package com.valdizz.penaltycheck.model.entity;
 
 import java.util.Calendar;
 import java.util.Date;

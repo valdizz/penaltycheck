@@ -2,6 +2,7 @@ package com.valdizz.penaltycheck.adapter;
 
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,17 +13,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.valdizz.penaltycheck.R;
-import com.valdizz.penaltycheck.db.DataHelper;
-import com.valdizz.penaltycheck.model.Penalty;
+import com.valdizz.penaltycheck.model.entity.Penalty;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder>{
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
+    private OnPenaltyClickListener penaltyClickListener;
 
     public PenaltyRecyclerViewAdapter(OrderedRealmCollection<Penalty> data) {
         super(data, true);
@@ -39,14 +42,17 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
         final Penalty penalty = getItem(position);
         holder.resolutionnumber.setText(penalty.getNumber());
         holder.penaltydate.setText(dateFormat.format(penalty.getDate()));
+        holder.penalty_card.setCardBackgroundColor(penalty.isChecked() ? Color.WHITE :holder.penalty_card.getResources().getColor(R.color.backgroundCardAlarm));
 
+        //
         holder.penalty_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                penaltyClickListener.viewPenaltyClick(penalty);
             }
         });
 
+        //delete penalty
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -57,7 +63,7 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataHelper.deletePenalty(penalty);
+                                penaltyClickListener.deletePenaltyClick(penalty);
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
@@ -69,27 +75,38 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
                         .show();
             }
         });
+
+        //pay penalty
         holder.payment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO payment methods
+                penaltyClickListener.payPenaltyClick(penalty);
             }
         });
     }
 
     class PenaltyViewHolder extends RecyclerView.ViewHolder{
 
-        CardView penalty_card;
-        TextView resolutionnumber, penaltydate;
-        ImageButton delete_button, payment_button;
+        @BindView(R.id.penalty_card) CardView penalty_card;
+        @BindView(R.id.tv_resolutionnumber) TextView resolutionnumber;
+        @BindView(R.id.tv_penaltydate) TextView penaltydate;
+        @BindView(R.id.delete_button) ImageButton delete_button;
+        @BindView(R.id.payment_button) ImageButton payment_button;
 
         PenaltyViewHolder(View view){
             super(view);
-            penalty_card = (CardView) view.findViewById(R.id.penalty_card);
-            delete_button = (ImageButton) view.findViewById(R.id.delete_button);
-            payment_button = (ImageButton) view.findViewById(R.id.payment_button);
-            resolutionnumber = (TextView) view.findViewById(R.id.tv_resolutionnumber);
-            penaltydate = (TextView) view.findViewById(R.id.tv_penaltydate);
+            ButterKnife.bind(this, view);
         }
+    }
+
+    public void setPenaltyClickListener(OnPenaltyClickListener onPenaltyClickListener){
+        penaltyClickListener = onPenaltyClickListener;
+    }
+
+    public interface OnPenaltyClickListener {
+
+        void payPenaltyClick(Penalty penalty);
+        void deletePenaltyClick(Penalty penalty);
+        void viewPenaltyClick(Penalty penalty);
     }
 }

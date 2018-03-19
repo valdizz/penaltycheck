@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.valdizz.penaltycheck.AutoActivity">
+    tools:context="com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity">
+
     <item
         android:id="@+id/action_check"
         android:icon="@drawable/ic_refresh"
@@ -20,4 +21,10 @@
         android:orderInCategory="3"
         android:title="@string/action_rate"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_check"
+        android:orderInCategory="4"
+        android:title="@android:string/ok"
+        app:showAsAction="always" />
 </menu>

@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardView.Light"
     android:id="@+id/penalty_card"
+    app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="4dp"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp">
 
     <android.support.constraint.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -74,7 +76,7 @@
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundButton"
+            android:background="@null"
             android:padding="@dimen/button_padding"
             android:alpha="0.54"
             app:layout_constraintTop_toBottomOf="@+id/tv_penaltydate"
@@ -85,7 +87,7 @@
             android:id="@+id/payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundButton"
+            android:background="@null"
             android:padding="@dimen/button_padding"
             android:alpha="0.54"
             app:layout_constraintTop_toBottomOf="@+id/tv_penaltydate"

@@ -31,4 +31,13 @@
     <string name="label_penaltydate">Date of the offense:</string>
     <string name="dialog_deletepenalty">Delete penalty?</string>
     <string name="dialog_controlauto">Surname, name, series and number of registration certificate must be filled!</string>
+    <string name="label_new_penalties">New:</string>
+    <string name="hint_addfoto">Add photo</string>
+    <string name="error_createimage">Can not create image!</string>
+    <string name="error_convertimage">Can not convert image!</string>
+    <string name="dialog_camera">Camera</string>
+    <string name="dialog_gallery">Gallery</string>
+    <string name="dialog_addfoto">Add foto</string>
+    <string name="dialog_noautos">No autos!</string>
+    <string name="dialog_nopenalties">No penalties!</string>
 </resources>

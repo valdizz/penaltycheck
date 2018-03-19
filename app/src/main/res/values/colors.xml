@@ -6,5 +6,5 @@
     <color name="textDark">#DE000000</color>
     <color name="textGray">#8A000000</color>
     <color name="backgroundButton">#00FFFFFF</color>
-    <color name="backgroundCardAlarm">#f6cece</color>
+    <color name="backgroundCardAlarm">#F6CECE</color>
 </resources>

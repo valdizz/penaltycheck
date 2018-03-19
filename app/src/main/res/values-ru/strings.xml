@@ -32,4 +32,13 @@
     <string name="title_activity_penalty">Штрафы</string>
     <string name="dialog_deletepenalty">Удалить штраф?</string>
     <string name="dialog_controlauto">Фамилия, имя, серия и номер свидетельства о регистрации должны быть заполнены!</string>
+    <string name="label_new_penalties">Новые:</string>
+    <string name="hint_addfoto">Добавить фото</string>
+    <string name="error_createimage">Невозможно создать изображение!</string>
+    <string name="dialog_camera">Камера</string>
+    <string name="dialog_gallery">Галерея</string>
+    <string name="dialog_addfoto">Добавить фото</string>
+    <string name="dialog_noautos">Нет авто!</string>
+    <string name="dialog_nopenalties">Штрафов нет!</string>
+    <string name="error_convertimage">Невозможно конвертировать изображение!</string>
 </resources>

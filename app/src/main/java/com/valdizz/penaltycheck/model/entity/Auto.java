@@ -1,9 +1,6 @@
-package com.valdizz.penaltycheck.model;
-
-import android.os.Parcelable;
+package com.valdizz.penaltycheck.model.entity;
 
 import java.util.Date;
-import java.util.UUID;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -19,6 +16,7 @@ public class Auto extends RealmObject {
     private String number;
     private String description;
     private boolean automatically;
+    private byte[] image;
     private Date lastupdate;
     private RealmList<Penalty> penalties;
 
@@ -84,6 +82,14 @@ public class Auto extends RealmObject {
 
     public void setAutomatically(boolean automatically) {
         this.automatically = automatically;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getLastupdate() {
