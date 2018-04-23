@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
+import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
@@ -38,6 +39,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     @BindView(R.id.tvPDescription) TextView tvPDescription;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @Inject RealmService realmService;
+    @Inject NetworkService networkService;
     private PenaltyActivityContract.Presenter penaltyActivityPresenter;
 
     @Override
@@ -53,7 +55,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         if (penaltyActivityPresenter == null){
-            penaltyActivityPresenter = new PenaltyActivityPresenter(this, realmService);
+            penaltyActivityPresenter = new PenaltyActivityPresenter(this, networkService);
         }
         initHeader(getIntent().getLongExtra(AUTOID_PARAM, -1));
         addFragment(getIntent());
@@ -61,14 +63,14 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
 
     @Override
     protected void onDestroy() {
-        penaltyActivityPresenter.closeRealm();
+        realmService.closeRealm();
         super.onDestroy();
     }
 
     private void initHeader(long auto_id){
         Auto auto = realmService.getAuto(auto_id);
-        tvPFullname.setText(auto.getSurname()+" "+auto.getName()+" "+auto.getPatronymic());
-        tvPCertificate.setText(getString(R.string.label_certificate_short)+" "+auto.getSeries()+" "+auto.getNumber());
+        tvPFullname.setText(auto.getFullName());
+        tvPCertificate.setText(getString(R.string.label_certificate_short)+" "+auto.getFullDoc());
         tvPDescription.setText(auto.getDescription());
     }
 
@@ -85,7 +87,8 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     //check penalties for this auto
     @OnClick(R.id.fab)
     void checkPenaltiesClick(){
-        penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1));
+        Auto auto = realmService.getAuto(getIntent().getLongExtra(AUTOID_PARAM, -1));
+        penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1), auto.getFullName(), auto.getSeries(), auto.getNumber());
     }
 
     //rate app
@@ -101,13 +104,24 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     }
 
     @Override
-    public void showRefreshing(boolean isRefresh) {
-        progressBar.setVisibility(isRefresh ? ProgressBar.VISIBLE : ProgressBar.INVISIBLE);
+    public void showRefreshing(final boolean isRefresh) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(isRefresh ? ProgressBar.VISIBLE : ProgressBar.INVISIBLE);
+            }
+        });
     }
 
     @Override
-    public void showMessage(String text) {
-        Snackbar.make(fab, text, Snackbar.LENGTH_LONG).show();
+    public void showMessage(final boolean isPenaltyFound) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(fab, isPenaltyFound ? getString(R.string.dialog_penaltyfound) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+
+            }
+        });
     }
 
     @Override

@@ -41,4 +41,6 @@
     <string name="dialog_noautos">Нет авто!</string>
     <string name="dialog_nopenalties">Штрафов нет!</string>
     <string name="error_convertimage">Невозможно конвертировать изображение!</string>
+    <string name="dialog_penaltyfound">Найден штраф!</string>
+    <string name="dialog_penaltynotfound">Штраф не найден!</string>
 </resources>

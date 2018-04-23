@@ -40,4 +40,6 @@
     <string name="dialog_addfoto">Add foto</string>
     <string name="dialog_noautos">No autos!</string>
     <string name="dialog_nopenalties">No penalties!</string>
+    <string name="dialog_penaltyfound">Penalty found!</string>
+    <string name="dialog_penaltynotfound">Penalty not found!</string>
 </resources>

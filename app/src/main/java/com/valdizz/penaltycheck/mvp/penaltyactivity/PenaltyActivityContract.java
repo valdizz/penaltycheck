@@ -1,20 +1,22 @@
 package com.valdizz.penaltycheck.mvp.penaltyactivity;
 
 
-import com.valdizz.penaltycheck.mvp.common.BasePresenter;
-
 public interface PenaltyActivityContract {
 
     interface View{
         void showRateApp();
         void showHelp();
         void showRefreshing(boolean isRefresh);
-        void showMessage(String text);
+        void showMessage(boolean isPenaltyFound);
     }
 
-    interface Presenter extends BasePresenter{
-        void onCheckPenalties(long id);
+    interface Presenter{
+        void onCheckPenalties(long id, String fullname, String series, String number);
         void onRateAppClick();
         void onHelpClick();
+    }
+
+    interface NetworkServiceListener{
+        void onFinishedNetworkService(boolean isPenaltyFound);
     }
 }

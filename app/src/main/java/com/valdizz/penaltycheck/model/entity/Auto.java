@@ -108,5 +108,12 @@ public class Auto extends RealmObject {
         this.penalties = penalties;
     }
 
+    public String getFullName() {
+        return surname + " " + name + " " + patronymic;
+    }
+
+    public String getFullDoc() {
+        return series + " " + number;
+    }
 
 }
