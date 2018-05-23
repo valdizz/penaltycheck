@@ -2,17 +2,30 @@ package com.valdizz.penaltycheck.mvp.autoactivity;
 
 
 import android.os.Handler;
+import android.os.Looper;
 
+import com.valdizz.penaltycheck.model.NetworkService;
+import com.valdizz.penaltycheck.model.NetworkServiceListener;
 import com.valdizz.penaltycheck.model.RealmService;
+import com.valdizz.penaltycheck.model.entity.Auto;
 
-public class AutoActivityPresenter implements AutoActivityContract.Presenter{
+import java.util.Date;
+import java.util.List;
+
+import io.reactivex.disposables.CompositeDisposable;
+
+public class AutoActivityPresenter implements AutoActivityContract.Presenter, NetworkServiceListener {
 
     private AutoActivityContract.View autoActivityView;
+    private NetworkService networkService;
     private RealmService realmService;
+    private CompositeDisposable disposables;
 
-    public AutoActivityPresenter(AutoActivityContract.View autoActivityView, RealmService realmService) {
+    public AutoActivityPresenter(AutoActivityContract.View autoActivityView, NetworkService networkService, RealmService realmService) {
         this.autoActivityView = autoActivityView;
+        this.networkService = networkService;
         this.realmService = realmService;
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
@@ -43,14 +56,41 @@ public class AutoActivityPresenter implements AutoActivityContract.Presenter{
     @Override
     public void onCheckPenalties() {
         autoActivityView.showRefreshing(true);
-        new Handler().postDelayed(new Runnable() {
+        disposables.add(networkService.checkPenalty(this, realmService.getAutos(false)));
+    }
+
+    @Override
+    public void onFoundPenalty(Auto auto, Date date, String number) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                //check penalties
-                autoActivityView.showMessage("Check penalties!");
-                autoActivityView.showRefreshing(false);
+                realmService.addPenalty(auto.getId(), date, number);
             }
-        },2000);
+        });
+    }
+
+    @Override
+    public void onSetLastCheckDate(Auto auto, Date lastupdate) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                realmService.updateLastCheckDateAuto(auto.getId(), lastupdate);
+            }
+        });
+    }
+
+    @Override
+    public void onSuccessRequest(long count) {
+        autoActivityView.showRefreshing(false);
+        autoActivityView.showMessage(count);
+    }
+
+    @Override
+    public void onErrorRequest(String error) {
+        autoActivityView.showRefreshing(false);
+        autoActivityView.showErrorMessage(error);
     }
 
     @Override
@@ -66,5 +106,10 @@ public class AutoActivityPresenter implements AutoActivityContract.Presenter{
     @Override
     public void closeRealm() {
         realmService.closeRealm();
+    }
+
+    @Override
+    public void onDispose() {
+        disposables.dispose();
     }
 }

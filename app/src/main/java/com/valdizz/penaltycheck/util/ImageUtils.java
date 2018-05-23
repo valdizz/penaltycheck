@@ -16,9 +16,9 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ImageUtil {
+public class ImageUtils {
 
-    public final static int IMAGE_MAX_SIDE = 150;
+    public static final int IMAGE_MAX_SIDE = 150;
 
     public static byte[] convertBitmapToBytes(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

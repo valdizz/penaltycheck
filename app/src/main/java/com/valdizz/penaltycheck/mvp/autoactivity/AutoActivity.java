@@ -18,11 +18,16 @@ import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.adapter.AutoRecyclerViewAdapter;
 import com.valdizz.penaltycheck.adapter.RecyclerViewEmptyObserver;
+import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
+import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.mvp.autoeditfragment.AutoEditFragment;
 import com.valdizz.penaltycheck.mvp.penaltyactivity.PenaltyActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
+import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -43,11 +48,13 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     private boolean mTwoPane;
     private AutoRecyclerViewAdapter recyclerViewAdapter;
     @Inject RealmService realmService;
+    @Inject NetworkService networkService;
     private AutoActivityContract.Presenter autoActivityPresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto);
         PenaltyCheckApplication.getComponent().injectAutoActivity(this);
@@ -59,7 +66,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
         }
 
         if (autoActivityPresenter == null) {
-            autoActivityPresenter = new AutoActivityPresenter(this, realmService);
+            autoActivityPresenter = new AutoActivityPresenter(this, networkService, realmService);
         }
 
         swipeRefreshLayout.setOnRefreshListener(swiperefreshListener);
@@ -70,6 +77,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     protected void onDestroy() {
         recyclerView.setAdapter(null);
         autoActivityPresenter.closeRealm();
+        autoActivityPresenter.onDispose();
         super.onDestroy();
     }
 
@@ -151,12 +159,17 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     }
 
     //check penalties
-    private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
+    private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = () -> checkPenalties();
+
+    private void checkPenalties(){
+        if (CheckPermissionsUtils.isOnline(this)){
             autoActivityPresenter.onCheckPenalties();
         }
-    };
+        else {
+            showRefreshing(false);
+            Snackbar.make(swipeRefreshLayout, getString(R.string.dialog_checkinternet), Snackbar.LENGTH_LONG).show();
+        }
+    }
 
     //rate app
     @Override
@@ -176,8 +189,13 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     }
 
     @Override
-    public void showMessage(String text) {
-        Snackbar.make(swipeRefreshLayout, text, Snackbar.LENGTH_LONG).show();
+    public void showMessage(long count) {
+        Snackbar.make(swipeRefreshLayout, count > 0 ? getString(R.string.dialog_penaltyfound, count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showErrorMessage(String error) {
+        Snackbar.make(swipeRefreshLayout, getString(R.string.dialog_networkerror, error), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -204,7 +222,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
             item_help.setVisible(true);
             item_rate.setVisible(true);
             item_save.setVisible(false);
-        }
+    }
         else {
             item_check.setVisible(true);
             item_help.setVisible(true);
@@ -219,7 +237,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
         int id = item.getItemId();
         switch (id) {
             case R.id.action_check:
-                autoActivityPresenter.onCheckPenalties();
+                checkPenalties();
                 return true;
             case R.id.action_help:
                 autoActivityPresenter.onHelpClick();

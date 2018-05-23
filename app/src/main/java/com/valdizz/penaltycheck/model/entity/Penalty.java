@@ -10,6 +10,15 @@ public class Penalty extends RealmObject {
     private String number;
     private boolean checked;
 
+    public Penalty() {
+    }
+
+    public Penalty(Date date, String number, boolean checked) {
+        this.date = date;
+        this.number = number;
+        this.checked = checked;
+    }
+
     public Date getDate() {
         return date;
     }

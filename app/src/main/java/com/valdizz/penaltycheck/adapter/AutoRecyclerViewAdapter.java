@@ -3,6 +3,8 @@ package com.valdizz.penaltycheck.adapter;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,11 +18,10 @@ import android.widget.TextView;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.model.entity.Penalty;
-import com.valdizz.penaltycheck.util.ImageUtil;
+import com.valdizz.penaltycheck.util.ImageUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +47,7 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
     @Override
     public void onBindViewHolder(final AutoViewHolder holder, final int position) {
         final Auto auto = getItem(position);
-        holder.fullname.setText(auto.getSurname() + " " + auto.getName() + " " + auto.getPatronymic());
+        holder.fullname.setText(auto.getFullName());
         holder.certificate.setText(holder.itemView.getContext().getResources().getString(R.string.label_certificate_short) + " " + auto.getSeries() + " " + auto.getNumber());
         holder.description.setText(auto.getDescription());
         holder.lastupdate.setText(auto.getLastupdate() != null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + dateFormat.format(auto.getLastupdate()) : "" + holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + holder.itemView.getContext().getResources().getString(R.string.label_never));
@@ -56,9 +57,12 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         }
         else {
             holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
+            holder.penalties.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.primary_text_dark));
         }
         if (auto.getImage().length > 0) {
-            holder.auto_image.setImageBitmap(ImageUtil.convertBytesToImage(auto.getImage()));
+            RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(holder.itemView.getContext().getResources(), ImageUtils.convertBytesToImage(auto.getImage()));
+            dr.setCornerRadius(25);
+            holder.auto_image.setImageDrawable(dr);
         }
         else {
             holder.auto_image.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.empty_car));

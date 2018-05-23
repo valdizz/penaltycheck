@@ -4,6 +4,7 @@ import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.model.entity.Penalty;
 
 import java.util.Date;
+import java.util.List;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
@@ -25,6 +26,20 @@ public class RealmService {
 
     public OrderedRealmCollection<Auto> getAutos() {
         return realm.where(Auto.class).findAllAsync().sort("id");
+    }
+
+    public List<Auto> getAutos(boolean isAutochecked) {
+        List<Auto> autos;
+        if (isAutochecked)
+            autos = realm.where(Auto.class).equalTo("automatically", true).findAllAsync().sort("id");
+        else
+            autos = realm.where(Auto.class).findAllAsync().sort("id");
+        return realm.copyFromRealm(autos);
+    }
+
+    public Auto getAuto(long id) {
+        Auto auto = realm.where(Auto.class).equalTo("id", id).findFirst();
+        return realm.copyFromRealm(auto);
     }
 
     public void addAuto(final String surname, final String name, final String patronymic, final String series, final String number, final String description, final boolean autocheck, final byte[] image) {
@@ -63,6 +78,16 @@ public class RealmService {
         });
     }
 
+    public void updateLastCheckDateAuto(final long id, final Date lastupdate) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Auto auto = realm.where(Auto.class).equalTo("id", id).findFirst();
+                auto.setLastupdate(lastupdate);
+            }
+        });
+    }
+
     public void deleteAuto(final long id) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -71,10 +96,6 @@ public class RealmService {
                 auto.deleteFromRealm();
             }
         });
-    }
-
-    public Auto getAuto(long id) {
-        return realm.where(Auto.class).equalTo("id", id).findFirst();
     }
 
     public boolean checkAuto(long id, String series, String number) {

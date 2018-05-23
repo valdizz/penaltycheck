@@ -41,6 +41,10 @@
     <string name="dialog_noautos">Нет авто!</string>
     <string name="dialog_nopenalties">Штрафов нет!</string>
     <string name="error_convertimage">Невозможно конвертировать изображение!</string>
-    <string name="dialog_penaltyfound">Найден штраф!</string>
-    <string name="dialog_penaltynotfound">Штраф не найден!</string>
+    <string name="dialog_penaltyfound">Найдено %1$d штраф(ов)!</string>
+    <string name="dialog_penaltynotfound">Штрафы не найдены!</string>
+    <string name="dialog_numberofpenalties">Найдено %1$d новых штрафов по вашим автомобилям! Чтобы просмотреть, откройте приложение.</string>
+    <string name="dialog_resofpenalties">+ %1$d еще</string>
+    <string name="dialog_networkerror">Ошибка сети: %1$s</string>
+    <string name="dialog_checkinternet">Проверьте интернет соединение!</string>
 </resources>

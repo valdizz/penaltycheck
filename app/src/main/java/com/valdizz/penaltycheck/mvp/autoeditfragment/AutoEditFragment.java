@@ -28,8 +28,8 @@ import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
-import com.valdizz.penaltycheck.util.ImageUtil;
-import com.valdizz.penaltycheck.util.CheckPermissionsUtil;
+import com.valdizz.penaltycheck.util.ImageUtils;
+import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,8 +55,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     @BindView(R.id.switchAutocheck) SwitchCompat switchAutocheck;
     @BindView(R.id.auto_image) ImageView autoImage;
     @BindView(R.id.auto_image_button) ImageButton autoImageButton;
-    @Inject
-    RealmService realmService;
+    @Inject RealmService realmService;
     private AutoEditFragmentContract.Presenter autoEditFragmentPresenter;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -87,7 +86,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
             etDescription.setText(auto.getDescription());
             switchAutocheck.setChecked(auto.isAutomatically());
             if (auto.getImage().length > 0) {
-                autoImage.setImageBitmap(ImageUtil.convertBytesToImage(auto.getImage()));
+                autoImage.setImageBitmap(ImageUtils.convertBytesToImage(auto.getImage()));
                 autoImageButton.setBackgroundResource(R.drawable.ic_clear);
                 autoImageButton.setTag(true);
             }
@@ -136,7 +135,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                 public void onClick(View view) {
                     dialog_image.dismiss();
                     userChoice = REQUEST_IMAGE_CAPTURE;
-                    if (CheckPermissionsUtil.checkPermissionReadExternalStorage(getActivity())) {
+                    if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
                         autoEditFragmentPresenter.onShowCameraClick();
                     }
                 }
@@ -147,7 +146,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                 public void onClick(View view) {
                     dialog_image.dismiss();
                     userChoice = REQUEST_IMAGE_GALLERY;
-                    if (CheckPermissionsUtil.checkPermissionReadExternalStorage(getActivity())) {
+                    if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
                         autoEditFragmentPresenter.onShowGalleryClick();
                     }
                 }
@@ -162,7 +161,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case CheckPermissionsUtil.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+            case CheckPermissionsUtils.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (userChoice==REQUEST_IMAGE_CAPTURE)
                         autoEditFragmentPresenter.onShowCameraClick();
@@ -178,7 +177,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoFile = ImageUtil.createImageFile(getActivity());
+                photoFile = ImageUtils.createImageFile(getActivity());
                 currentPhotoPath = photoFile.getAbsolutePath();
             } catch (IOException e) {
                 Snackbar.make(switchAutocheck, getString(R.string.error_createimage), Snackbar.LENGTH_LONG).show();
@@ -209,27 +208,27 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                 case REQUEST_IMAGE_CAPTURE:
                     Bitmap bitmap_camera = null;
                     try {
-                        bitmap_camera = ImageUtil.rotateImageIfRequired(BitmapFactory.decodeFile(currentPhotoPath), currentPhotoPath);
+                        bitmap_camera = ImageUtils.rotateImageIfRequired(BitmapFactory.decodeFile(currentPhotoPath), currentPhotoPath);
                     } catch (IOException e) {
                         Snackbar.make(switchAutocheck, getString(R.string.error_convertimage), Snackbar.LENGTH_LONG).show();
                         break;
                         //e.printStackTrace();
                     }
-                    Bitmap photo = ImageUtil.scaleImage(bitmap_camera, ImageUtil.dpToPx(getActivity(), ImageUtil.IMAGE_MAX_SIDE));;
+                    Bitmap photo = ImageUtils.scaleImage(bitmap_camera, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));;
                     autoEditFragmentPresenter.onSelectFromCameraResult(photo);
                     break;
                 case REQUEST_IMAGE_GALLERY:
                     Bitmap bitmap_gallery = null;
                     if (data != null) {
                         try {
-                            bitmap_gallery=ImageUtil.rotateImageIfRequired(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData()), data.getData());
+                            bitmap_gallery= ImageUtils.rotateImageIfRequired(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData()), data.getData());
                         } catch (IOException e) {
                             Snackbar.make(switchAutocheck, getString(R.string.error_convertimage), Snackbar.LENGTH_LONG).show();
                             break;
                             //e.printStackTrace();
                         }
                     }
-                    Bitmap image = ImageUtil.scaleImage(bitmap_gallery, ImageUtil.dpToPx(getActivity(), ImageUtil.IMAGE_MAX_SIDE));
+                    Bitmap image = ImageUtils.scaleImage(bitmap_gallery, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));
                     autoEditFragmentPresenter.onSelectFromGalleryResult(image);
                     break;
             }
@@ -275,7 +274,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
         auto.setDescription(etDescription.getText().toString().trim());
         auto.setAutomatically(switchAutocheck.isChecked());
         if ((Boolean) autoImageButton.getTag()) {
-            auto.setImage(ImageUtil.convertBitmapToBytes(((BitmapDrawable)autoImage.getDrawable()).getBitmap()));
+            auto.setImage(ImageUtils.convertBitmapToBytes(((BitmapDrawable)autoImage.getDrawable()).getBitmap()));
         }
         else {
             byte[] bytes = {};

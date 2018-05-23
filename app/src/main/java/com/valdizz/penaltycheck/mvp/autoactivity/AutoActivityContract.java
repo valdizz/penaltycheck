@@ -1,7 +1,10 @@
 package com.valdizz.penaltycheck.mvp.autoactivity;
 
 
+import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.common.BasePresenter;
+
+import java.util.List;
 
 public interface AutoActivityContract {
 
@@ -12,7 +15,8 @@ public interface AutoActivityContract {
         void showRateApp();
         void showHelp();
         void showRefreshing(boolean isRefresh);
-        void showMessage(String text);
+        void showMessage(long count);
+        void showErrorMessage(String error);
         void saveAuto();
     }
 
@@ -25,5 +29,7 @@ public interface AutoActivityContract {
         void onCheckPenalties();
         void onRateAppClick();
         void onHelpClick();
+        void onDispose();
     }
+
 }

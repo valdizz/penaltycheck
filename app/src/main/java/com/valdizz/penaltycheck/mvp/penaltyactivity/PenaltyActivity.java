@@ -20,6 +20,7 @@ import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
+import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
 import javax.inject.Inject;
 
@@ -55,7 +56,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         if (penaltyActivityPresenter == null){
-            penaltyActivityPresenter = new PenaltyActivityPresenter(this, networkService);
+            penaltyActivityPresenter = new PenaltyActivityPresenter(this, networkService, realmService);
         }
         initHeader(getIntent().getLongExtra(AUTOID_PARAM, -1));
         addFragment(getIntent());
@@ -63,7 +64,8 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
 
     @Override
     protected void onDestroy() {
-        realmService.closeRealm();
+        penaltyActivityPresenter.closeRealm();
+        penaltyActivityPresenter.onDispose();
         super.onDestroy();
     }
 
@@ -87,8 +89,12 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     //check penalties for this auto
     @OnClick(R.id.fab)
     void checkPenaltiesClick(){
-        Auto auto = realmService.getAuto(getIntent().getLongExtra(AUTOID_PARAM, -1));
-        penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1), auto.getFullName(), auto.getSeries(), auto.getNumber());
+        if (CheckPermissionsUtils.isOnline(this)){
+            penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1));
+        }
+        else {
+            Snackbar.make(fab, getString(R.string.dialog_checkinternet), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     //rate app
@@ -104,24 +110,18 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     }
 
     @Override
-    public void showRefreshing(final boolean isRefresh) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(isRefresh ? ProgressBar.VISIBLE : ProgressBar.INVISIBLE);
-            }
-        });
+    public void showRefreshing(boolean isRefresh) {
+        progressBar.setVisibility(isRefresh ? ProgressBar.VISIBLE : ProgressBar.INVISIBLE);
     }
 
     @Override
-    public void showMessage(final boolean isPenaltyFound) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(fab, isPenaltyFound ? getString(R.string.dialog_penaltyfound) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+    public void showMessage(long count) {
+        Snackbar.make(fab, count > 0 ? getString(R.string.dialog_penaltyfound, count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+    }
 
-            }
-        });
+    @Override
+    public void showErrorMessage(String error) {
+        Snackbar.make(fab, getString(R.string.dialog_networkerror, error), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
