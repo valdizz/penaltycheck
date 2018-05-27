@@ -60,28 +60,6 @@ public class AutoActivityPresenter implements AutoActivityContract.Presenter, Ne
     }
 
     @Override
-    public void onFoundPenalty(Auto auto, Date date, String number) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                realmService.addPenalty(auto.getId(), date, number);
-            }
-        });
-    }
-
-    @Override
-    public void onSetLastCheckDate(Auto auto, Date lastupdate) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                realmService.updateLastCheckDateAuto(auto.getId(), lastupdate);
-            }
-        });
-    }
-
-    @Override
     public void onSuccessRequest(long count) {
         autoActivityView.showRefreshing(false);
         autoActivityView.showMessage(count);

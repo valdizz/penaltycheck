@@ -62,20 +62,6 @@ public class CheckPenaltyDailyJob extends DailyJob implements NetworkServiceList
     }
 
     @Override
-    public void onFoundPenalty(Auto auto, Date date, String number) {
-        RealmService realmService = new RealmService();
-        realmService.addPenalty(auto.getId(), date, number);
-        realmService.closeRealm();
-    }
-
-    @Override
-    public void onSetLastCheckDate(Auto auto, Date lastupdate) {
-        RealmService realmService = new RealmService();
-        realmService.updateLastCheckDateAuto(auto.getId(), lastupdate);
-        realmService.closeRealm();
-    }
-
-    @Override
     public void onSuccessRequest(long count) {
         if (count > 0){
             NotificationUtils notificationUtils = new NotificationUtils(getContext());

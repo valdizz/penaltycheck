@@ -7,4 +7,5 @@
     <color name="textGray">#8A000000</color>
     <color name="backgroundButton">#00FFFFFF</color>
     <color name="backgroundCardAlarm">#F6CECE</color>
+    <color name="splashScreen">#FFFF00</color>
 </resources>

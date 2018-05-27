@@ -24,7 +24,6 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder>{
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
     private OnPenaltyClickListener penaltyClickListener;
 
     public PenaltyRecyclerViewAdapter(OrderedRealmCollection<Penalty> data) {
@@ -41,10 +40,10 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
     public void onBindViewHolder(PenaltyViewHolder holder, int position) {
         final Penalty penalty = getItem(position);
         holder.resolutionnumber.setText(penalty.getNumber());
-        holder.penaltydate.setText(dateFormat.format(penalty.getDate()));
+        holder.penaltydate.setText(penalty.getDate());
         holder.penalty_card.setCardBackgroundColor(penalty.isChecked() ? Color.WHITE :holder.penalty_card.getResources().getColor(R.color.backgroundCardAlarm));
 
-        //
+        //set viewed
         holder.penalty_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -59,7 +59,7 @@ public class NotificationUtils extends ContextWrapper {
                 .setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.empty_car))
                 .setLights(Color.RED, 0, 1)
-                //.setVibrate(new long[]{500, 500, 500, 500, 500})
+                //.setVibrate(new long[]{300, 1, 600, 1, 300, 1, 600})
                 //.setStyle()
                 .setContentIntent(getContentIntent())
                 .setAutoCancel(true);

@@ -6,24 +6,24 @@ import java.util.Date;
 import io.realm.RealmObject;
 
 public class Penalty extends RealmObject {
-    private Date date;
+    private String date;
     private String number;
     private boolean checked;
 
     public Penalty() {
     }
 
-    public Penalty(Date date, String number, boolean checked) {
+    public Penalty(String date, String number, boolean checked) {
         this.date = date;
         this.number = number;
         this.checked = checked;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -41,6 +41,19 @@ public class Penalty extends RealmObject {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Penalty penalty = (Penalty) o;
+        return number.equals(penalty.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return number.hashCode();
     }
 
     @Override

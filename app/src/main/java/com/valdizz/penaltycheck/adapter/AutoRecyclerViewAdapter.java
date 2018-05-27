@@ -57,7 +57,7 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         }
         else {
             holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
-            holder.penalties.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.primary_text_dark));
+            holder.penalties.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.textGray));
         }
         if (auto.getImage().length > 0) {
             RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(holder.itemView.getContext().getResources(), ImageUtils.convertBytesToImage(auto.getImage()));

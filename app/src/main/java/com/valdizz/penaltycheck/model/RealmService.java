@@ -106,14 +106,15 @@ public class RealmService {
         return realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties();
     }
 
-    public void addPenalty(final long id, final Date date, final String number) {
+    public void addPenalty(final long id, final String date, final String number) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Penalty penalty = realm.createObject(Penalty.class);
                 penalty.setDate(date);
                 penalty.setNumber(number);
-                realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().add(penalty);
+                if (!realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().contains(penalty))
+                    realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().add(penalty);
             }
         });
     }

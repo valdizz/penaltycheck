@@ -5,6 +5,10 @@ import android.util.Log;
 import com.valdizz.penaltycheck.model.entity.Auto;
 
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 
 import java.util.Date;
 import java.util.List;
@@ -54,12 +58,15 @@ public class NetworkService{
                         .map(response -> response.body().string())
                         .doOnNext(response_string -> {
                             Log.d(LOG_TAG_PCHECK, "Save date: " + response_string + " / " + Thread.currentThread().getName());
-                            networkServiceListener.onSetLastCheckDate(auto, new Date());
+                            saveLastCheckDate(auto);
                         })
-                        .filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
+                        //.filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
                         .doOnNext(response_string -> {
                             Log.d(LOG_TAG_PCHECK, "Found penalty: " + response_string + " / " + Thread.currentThread().getName());
-                            networkServiceListener.onFoundPenalty(auto, new Date(), response_string);
+                            //parseAndSavePenalties(response_string, networkServiceListener, auto);
+                            RealmService realmService = new RealmService();
+                            realmService.addPenalty(auto.getId(), new Date().toString(), response_string);
+                            realmService.closeRealm();
                         })
                 )
                 .count()
@@ -77,5 +84,22 @@ public class NetworkService{
                         networkServiceListener.onErrorRequest(e.getLocalizedMessage());
                     }
                 });
+    }
+
+    private void saveLastCheckDate(Auto auto){
+        RealmService realmService = new RealmService();
+        realmService.updateLastCheckDateAuto(auto.getId(), new Date());
+        realmService.closeRealm();
+    }
+
+    private void parseAndSavePenalties(String response, NetworkServiceListener networkServiceListener, Auto auto){
+        RealmService realmService = new RealmService();
+        Document table = Jsoup.parse(response);
+        Elements rows = table.select("tr");
+        for (int i = 1; i < rows.size(); i++){
+            Elements cols = rows.get(i).select("td");
+            realmService.addPenalty(auto.getId(), cols.get(3).text(), cols.get(4).text());
+        }
+        realmService.closeRealm();
     }
 }
