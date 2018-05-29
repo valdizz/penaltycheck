@@ -65,7 +65,7 @@ public class NetworkService{
                             Log.d(LOG_TAG_PCHECK, "Found penalty: " + response_string + " / " + Thread.currentThread().getName());
                             //parseAndSavePenalties(response_string, networkServiceListener, auto);
                             RealmService realmService = new RealmService();
-                            realmService.addPenalty(auto.getId(), new Date().toString(), response_string);
+                            realmService.addPenalty(auto.getId(), new Date().toString(), response_string + Math.random());
                             realmService.closeRealm();
                         })
                 )

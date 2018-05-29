@@ -8,6 +8,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 
-public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, AutoRecyclerViewAdapter.AutoViewHolder> {
+public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, AutoRecyclerViewAdapter.AutoViewHolder>  implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
     private OnAutoClickListener autoClickListener;
@@ -75,39 +76,37 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
                 autoClickListener.getPenaltiesClick(auto.getId());
             }
         });
+    }
 
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int position, int direction) {
+        final Auto auto = getItem(position);
         //delete auto
-        holder.delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(android.R.string.dialog_alert_title)
-                        .setMessage(R.string.dialog_deleteauto)
-                        .setCancelable(true)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                autoClickListener.deleteAutoClick(auto.getId());
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
-            }
-        });
-
+        if (direction == ItemTouchHelper.LEFT) {
+            new AlertDialog.Builder(viewHolder.itemView.getContext())
+                    .setTitle(android.R.string.dialog_alert_title)
+                    .setMessage(R.string.dialog_deleteauto)
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            autoClickListener.deleteAutoClick(auto.getId());
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            notifyItemChanged(position);
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }
         //edit auto
-        holder.edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                autoClickListener.editAutoClick(auto.getId());
-            }
-        });
-
+        else {
+            autoClickListener.editAutoClick(auto.getId());
+            notifyItemChanged(position);
+        }
     }
 
     private int getNewPenalties(List<Penalty> penalties){
@@ -128,8 +127,6 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
         @BindView(R.id.tv_description) TextView description;
         @BindView(R.id.tv_lastupdate) TextView lastupdate;
         @BindView(R.id.tv_penalties) TextView penalties;
-        @BindView(R.id.delete_button)ImageButton delete_button;
-        @BindView(R.id.edit_button) ImageButton edit_button;
         @BindView(R.id.auto_image) ImageView auto_image;
 
         AutoViewHolder(View view) {
@@ -143,7 +140,6 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
     }
 
     public interface OnAutoClickListener {
-
         void editAutoClick(long id);
         void deleteAutoClick(long id);
         void getPenaltiesClick(long id);

@@ -2,8 +2,10 @@ package com.valdizz.penaltycheck.mvp.penaltyfragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.adapter.PenaltyRecyclerViewAdapter;
+import com.valdizz.penaltycheck.adapter.RecyclerItemTouchHelper;
 import com.valdizz.penaltycheck.adapter.RecyclerViewEmptyObserver;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Penalty;
@@ -28,8 +31,7 @@ public class PenaltyFragment extends Fragment implements PenaltyFragmentContract
     @BindView(R.id.recyclerview_penalty) RecyclerView penaltyRecyclerView;
     @BindView(R.id.recyclerview_penalty_isempty) LinearLayout emptyView;
     private PenaltyRecyclerViewAdapter penaltyRecyclerViewAdapter;
-    @Inject
-    RealmService realmService;
+    @Inject RealmService realmService;
     private PenaltyFragmentContract.Presenter penaltyFragmentPresenter;
 
     public PenaltyFragment() {
@@ -63,10 +65,12 @@ public class PenaltyFragment extends Fragment implements PenaltyFragmentContract
         penaltyRecyclerViewAdapter.setPenaltyClickListener(this);
         penaltyRecyclerView.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setAutoMeasureEnabled(true);
         penaltyRecyclerView.setLayoutManager(layoutManager);
+        penaltyRecyclerView.setItemAnimator(new DefaultItemAnimator());
         penaltyRecyclerView.setAdapter(penaltyRecyclerViewAdapter);
         penaltyRecyclerViewAdapter.registerAdapterDataObserver(new RecyclerViewEmptyObserver(penaltyRecyclerView, emptyView, penaltyRecyclerView));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, penaltyRecyclerViewAdapter));
+        itemTouchHelper.attachToRecyclerView(penaltyRecyclerView);
     }
 
     @Override

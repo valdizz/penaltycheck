@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,12 @@ import android.widget.TextView;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.model.entity.Penalty;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder>{
+public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty, PenaltyRecyclerViewAdapter.PenaltyViewHolder> implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
     private OnPenaltyClickListener penaltyClickListener;
 
@@ -51,30 +50,6 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
             }
         });
 
-        //delete penalty
-        holder.delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(android.R.string.dialog_alert_title)
-                        .setMessage(R.string.dialog_deletepenalty)
-                        .setCancelable(true)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                penaltyClickListener.deletePenaltyClick(penalty);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
-            }
-        });
-
         //pay penalty
         holder.payment_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +59,37 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
         });
     }
 
+    //delete penalty
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int position, int direction) {
+        if (direction == ItemTouchHelper.LEFT) {
+            final Penalty penalty = getItem(position);
+            new AlertDialog.Builder(viewHolder.itemView.getContext())
+                    .setTitle(android.R.string.dialog_alert_title)
+                    .setMessage(R.string.dialog_deletepenalty)
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            penaltyClickListener.deletePenaltyClick(penalty);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            notifyItemChanged(position);
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+
     class PenaltyViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.penalty_card) CardView penalty_card;
         @BindView(R.id.tv_resolutionnumber) TextView resolutionnumber;
         @BindView(R.id.tv_penaltydate) TextView penaltydate;
-        @BindView(R.id.delete_button) ImageButton delete_button;
         @BindView(R.id.payment_button) ImageButton payment_button;
 
         PenaltyViewHolder(View view){
@@ -103,7 +103,6 @@ public class PenaltyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Penalty
     }
 
     public interface OnPenaltyClickListener {
-
         void payPenaltyClick(Penalty penalty);
         void deletePenaltyClick(Penalty penalty);
         void viewPenaltyClick(Penalty penalty);

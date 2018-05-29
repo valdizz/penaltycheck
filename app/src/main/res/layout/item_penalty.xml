@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:text="@string/label_resolutionnumber"
             android:textSize="@dimen/text_smallplus"
-            android:gravity="top"
-            android:paddingTop="@dimen/default_padding_8"
-            android:paddingLeft="@dimen/default_padding_16"
+            android:layout_marginTop="@dimen/default_padding_8"
+            android:layout_marginLeft="@dimen/default_padding_16"
+            android:layout_marginStart="@dimen/default_padding_16"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -35,62 +35,52 @@
             android:id="@+id/tv_resolutionnumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/textDark"
             android:textSize="@dimen/text_big"
             android:textStyle="bold"
-            android:textColor="@color/textDark"
-            android:gravity="end"
-            tools:text="123456789"
-            android:paddingTop="@dimen/default_padding_8"
-            android:paddingRight="@dimen/default_padding_16"
-            app:layout_constraintTop_toTopOf="@+id/label_resolutionnumber"
-            app:layout_constraintStart_toEndOf="@+id/label_resolutionnumber"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/label_resolutionnumber"
+            app:layout_constraintTop_toBottomOf="@+id/label_resolutionnumber"
+            tools:text="123456789" />
 
         <TextView
             android:id="@+id/label_penaltydate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_4"
             android:text="@string/label_penaltydate"
             android:textSize="@dimen/text_smallplus"
-            android:paddingTop="@dimen/default_padding_8"
-            android:paddingLeft="@dimen/default_padding_16"
-            app:layout_constraintTop_toBottomOf="@+id/tv_resolutionnumber"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/tv_resolutionnumber"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resolutionnumber" />
 
         <TextView
             android:id="@+id/tv_penaltydate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/textDark"
             android:textSize="@dimen/text_big"
             android:textStyle="bold"
-            android:textColor="@color/textDark"
-            android:gravity="end"
-            tools:text="27.05.2017 17:52"
-            android:paddingTop="@dimen/default_padding_8"
-            android:paddingRight="@dimen/default_padding_16"
-            app:layout_constraintTop_toTopOf="@+id/label_penaltydate"
-            app:layout_constraintStart_toEndOf="@+id/label_penaltydate"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:padding="@dimen/button_padding"
-            android:alpha="0.54"
-            app:layout_constraintTop_toBottomOf="@+id/tv_penaltydate"
             app:layout_constraintEnd_toStartOf="@+id/payment_button"
-            app:srcCompat="@drawable/ic_action_trash" />
+            app:layout_constraintStart_toStartOf="@+id/label_penaltydate"
+            app:layout_constraintTop_toBottomOf="@+id/label_penaltydate"
+            tools:text="27.05.2017 17:52" />
 
         <ImageButton
             android:id="@+id/payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="0.54"
             android:background="@null"
             android:padding="@dimen/button_padding"
-            android:alpha="0.54"
-            app:layout_constraintTop_toBottomOf="@+id/tv_penaltydate"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_action_creditcard" />
 

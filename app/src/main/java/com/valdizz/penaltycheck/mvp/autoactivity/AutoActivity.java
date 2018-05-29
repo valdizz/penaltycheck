@@ -8,8 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -17,6 +19,7 @@ import android.widget.LinearLayout;
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.adapter.AutoRecyclerViewAdapter;
+import com.valdizz.penaltycheck.adapter.RecyclerItemTouchHelper;
 import com.valdizz.penaltycheck.adapter.RecyclerViewEmptyObserver;
 import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
@@ -84,8 +87,11 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     private void setupAutoRecyclerView() {
         recyclerViewAdapter = new AutoRecyclerViewAdapter(realmService.getAutos());
         recyclerViewAdapter.setAutoClickListener(this);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.registerAdapterDataObserver(new RecyclerViewEmptyObserver(recyclerView, emptyView, swipeRefreshLayout));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, recyclerViewAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     //add auto

@@ -2,6 +2,7 @@ package com.valdizz.penaltycheck.job;
 
 import android.app.Notification;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.evernote.android.job.DailyJob;
 import com.evernote.android.job.JobManager;
@@ -24,11 +25,12 @@ import io.reactivex.disposables.Disposable;
 
 public class CheckPenaltyDailyJob extends DailyJob implements NetworkServiceListener{
 
-    public static final String TAG = "CheckPenaltyDailyJob";
+    public static final String TAG = "PenaltyCheckDailyJob";
     private Disposable disposable;
     @Inject NetworkService networkService;
 
     public CheckPenaltyDailyJob() {
+        Log.d(TAG, "Constructor");
         PenaltyCheckApplication.getComponent().injectCheckPenaltyDailyJob(this);
     }
 
@@ -36,33 +38,40 @@ public class CheckPenaltyDailyJob extends DailyJob implements NetworkServiceList
         if (!JobManager.instance().getAllJobRequestsForTag(TAG).isEmpty()) {
             return;
         }
-        JobRequest.Builder builder = new JobRequest.Builder(TAG).setRequiredNetworkType(JobRequest.NetworkType.UNMETERED);
-        DailyJob.schedule(builder, TimeUnit.HOURS.toMillis(12), TimeUnit.HOURS.toMillis(20));
+        Log.d(TAG, "Shedule");
+        JobRequest.Builder builder = new JobRequest.Builder(TAG).setRequiredNetworkType(JobRequest.NetworkType.CONNECTED);
+        DailyJob.schedule(builder, TimeUnit.HOURS.toMillis(23), TimeUnit.HOURS.toMillis(1)+TimeUnit.MINUTES.toMillis(10));
     }
 
     @NonNull
     @Override
     protected DailyJobResult onRunDailyJob(@NonNull Params params) {
+        Log.d(TAG, "Start job");
         if (CheckPermissionsUtils.isOnline(getContext())){
             RealmService realmService = new RealmService();
             try {
                 List<Auto> autos = realmService.getAutos(true);
                 disposable = networkService.checkPenalty(this, autos);
+                Log.d(TAG, "Check penalty");
             } catch (Exception e) {
+                Log.d(TAG, "Cancel job");
                 return DailyJobResult.CANCEL;
             }
             finally {
                 realmService.closeRealm();
             }
+            Log.d(TAG, "Success");
             return DailyJobResult.SUCCESS;
         }
         else {
+            Log.d(TAG, "Cancel");
             return DailyJobResult.CANCEL;
         }
     }
 
     @Override
     public void onSuccessRequest(long count) {
+        Log.d(TAG, "onSuccessRequest");
         if (count > 0){
             NotificationUtils notificationUtils = new NotificationUtils(getContext());
             Notification notification = notificationUtils.getNotification(count);
@@ -73,6 +82,7 @@ public class CheckPenaltyDailyJob extends DailyJob implements NetworkServiceList
 
     @Override
     public void onErrorRequest(String error) {
+        Log.d(TAG, "onErrorRequest");
         disposable.dispose();
     }
 }
