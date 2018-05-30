@@ -13,10 +13,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.valdizz.penaltycheck.R;
-import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
-
-import java.util.List;
 
 public class NotificationUtils extends ContextWrapper {
 
@@ -53,14 +50,14 @@ public class NotificationUtils extends ContextWrapper {
     public Notification getNotification(long count) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHECK_PENALTY_CHANNEL_ID)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setContentTitle(getString(R.string.dialog_penaltyfound, count))
-                .setContentText(getString(R.string.dialog_numberofpenalties, count))
-                .setTicker(getString(R.string.dialog_penaltyfound, count))
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentTitle(getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count))
+                .setContentText(getResources().getQuantityString(R.plurals.dialog_numberofpenalties, (int)count, (int)count))
+                .setTicker(getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count))
+                .setSmallIcon(R.mipmap.ic_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.empty_car))
-                .setLights(Color.RED, 0, 1)
-                //.setVibrate(new long[]{300, 1, 600, 1, 300, 1, 600})
-                //.setStyle()
+                .setLights(Color.RED, 2, 1)
+                .setVibrate(new long[]{1000, 1, 500, 1, 1000, 1, 500})
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getQuantityString(R.plurals.dialog_numberofpenalties, (int)count, (int)count)))
                 .setContentIntent(getContentIntent())
                 .setAutoCancel(true);
         return builder.build();

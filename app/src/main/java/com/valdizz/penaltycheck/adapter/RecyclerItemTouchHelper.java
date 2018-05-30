@@ -43,7 +43,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 RectF background  = new RectF(itemView.getLeft(), itemView.getTop(), dX, itemView.getBottom());
                 c.drawRect(background , paint);
                 RectF icon_dest = new RectF(itemView.getLeft() + width, itemView.getTop() + width, itemView.getLeft() + 2 * width, itemView.getBottom() - width);
-                c.drawBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.baseline_edit_white_24), null, icon_dest, paint);
+                c.drawBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.ic_edit), null, icon_dest, paint);
             }
             //swipe left - delete
             else {
@@ -52,7 +52,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 RectF background  = new RectF(itemView.getRight()+dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
                 c.drawRect(background , paint);
                 RectF icon_dest = new RectF(itemView.getRight() - 2 * width, itemView.getTop() + width, itemView.getRight() - width, itemView.getBottom() - width);
-                c.drawBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.baseline_delete_white_24), null, icon_dest, paint);
+                c.drawBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.ic_delete), null, icon_dest, paint);
             }
         }
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

@@ -40,10 +40,21 @@
     <string name="dialog_addfoto">Add foto</string>
     <string name="dialog_noautos">No autos!</string>
     <string name="dialog_nopenalties">No penalties!</string>
-    <string name="dialog_penaltyfound">%1$d penalties found!</string>
+    <plurals name="dialog_penaltyfound">
+        <item quantity="one">%1$d penalty found!</item>
+        <item quantity="two">%1$d penalties found!</item>
+        <item quantity="few">%1$d penalties found!</item>
+        <item quantity="many">%1$d penalties found!</item>
+        <item quantity="other">%1$d penalties found!</item>
+    </plurals>
+    <plurals name="dialog_numberofpenalties">
+        <item quantity="one">Found %1$d new penalty for your cars! To view, open the application.</item>
+        <item quantity="two">Found %1$d new penalties for your cars! To view, open the application.</item>
+        <item quantity="few">Found %1$d new penalties for your cars! To view, open the application.</item>
+        <item quantity="many">Found %1$d new penalties for your cars! To view, open the application.</item>
+        <item quantity="other">Found %1$d new penalties for your cars! To view, open the application.</item>
+    </plurals>
     <string name="dialog_penaltynotfound">No penalties found!</string>
-    <string name="dialog_numberofpenalties">Found %1$d new penalties for your cars! To view, open the application.</string>
-    <string name="dialog_resofpenalties">+ %1$d more</string>
     <string name="dialog_networkerror">Network error: %1$s</string>
     <string name="dialog_checkinternet">Check your internet connection!</string>
 </resources>

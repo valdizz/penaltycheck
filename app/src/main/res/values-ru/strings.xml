@@ -41,10 +41,21 @@
     <string name="dialog_noautos">Нет авто!</string>
     <string name="dialog_nopenalties">Штрафов нет!</string>
     <string name="error_convertimage">Невозможно конвертировать изображение!</string>
-    <string name="dialog_penaltyfound">Найдено %1$d штраф(ов)!</string>
+    <plurals name="dialog_penaltyfound">
+        <item quantity="one">Найден %1$d штраф!</item>
+        <item quantity="two">Найдено %1$d штрафа!</item>
+        <item quantity="few">Найдено %1$d штрафа!</item>
+        <item quantity="many">Найдено %1$d штрафов!</item>
+        <item quantity="other">Найдено %1$d штрафов!</item>
+    </plurals>
+    <plurals name="dialog_numberofpenalties">
+        <item quantity="one">Найден %1$d новый штраф по вашим автомобилям! Чтобы просмотреть, откройте приложение.</item>
+        <item quantity="two">Найдено %1$d новых штрафа по вашим автомобилям! Чтобы просмотреть, откройте приложение.</item>
+        <item quantity="few">Найдено %1$d новых штрафа по вашим автомобилям! Чтобы просмотреть, откройте приложение.</item>
+        <item quantity="many">Найдено %1$d новых штрафов по вашим автомобилям! Чтобы просмотреть, откройте приложение.</item>
+        <item quantity="other">Найдено %1$d новых штрафов по вашим автомобилям! Чтобы просмотреть, откройте приложение.</item>
+    </plurals>
     <string name="dialog_penaltynotfound">Штрафы не найдены!</string>
-    <string name="dialog_numberofpenalties">Найдено %1$d новых штрафов по вашим автомобилям! Чтобы просмотреть, откройте приложение.</string>
-    <string name="dialog_resofpenalties">+ %1$d еще</string>
     <string name="dialog_networkerror">Ошибка сети: %1$s</string>
     <string name="dialog_checkinternet">Проверьте интернет соединение!</string>
 </resources>

@@ -116,7 +116,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
 
     @Override
     public void showMessage(long count) {
-        Snackbar.make(fab, count > 0 ? getString(R.string.dialog_penaltyfound, count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(fab, count > 0 ? getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class RealmService {
     public List<Auto> getAutos(boolean isAutochecked) {
         List<Auto> autos;
         if (isAutochecked)
-            autos = realm.where(Auto.class).equalTo("automatically", true).findAllAsync().sort("id");
+            autos = realm.where(Auto.class).equalTo("automatically", true).findAll().sort("id");
         else
             autos = realm.where(Auto.class).findAllAsync().sort("id");
         return realm.copyFromRealm(autos);

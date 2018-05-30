@@ -1,7 +1,7 @@
 package com.valdizz.penaltycheck.dagger;
 
 
-import com.valdizz.penaltycheck.job.CheckPenaltyDailyJob;
+import com.valdizz.penaltycheck.job.CheckPenaltyWorker;
 import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
 import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.mvp.autoeditfragment.AutoEditFragment;
@@ -21,5 +21,5 @@ public interface AppComponent {
     void injectAutoEditFragment(AutoEditFragment autoEditFragment);
     void injectPenaltyActivity(PenaltyActivity penaltyActivity);
     void injectPenaltyFragment(PenaltyFragment penaltyFragment);
-    void injectCheckPenaltyDailyJob(CheckPenaltyDailyJob checkPenaltyDailyJob);
+    void injectCheckPenaltyWorker(CheckPenaltyWorker checkPenaltyWorker);
 }

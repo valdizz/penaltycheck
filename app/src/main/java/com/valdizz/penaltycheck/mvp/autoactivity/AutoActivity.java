@@ -196,7 +196,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
 
     @Override
     public void showMessage(long count) {
-        Snackbar.make(swipeRefreshLayout, count > 0 ? getString(R.string.dialog_penaltyfound, count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
+        Snackbar.make(swipeRefreshLayout, count > 0 ? getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count) : getString(R.string.dialog_penaltynotfound), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
