@@ -1,6 +1,7 @@
 package com.valdizz.penaltycheck.adapter;
 
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -9,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.valdizz.penaltycheck.R;
+import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.model.entity.Penalty;
 import com.valdizz.penaltycheck.util.ImageUtils;
@@ -48,25 +51,29 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
     @Override
     public void onBindViewHolder(final AutoViewHolder holder, final int position) {
         final Auto auto = getItem(position);
+        final Resources res = holder.itemView.getContext().getResources();
         holder.fullname.setText(auto.getFullName());
-        holder.certificate.setText(holder.itemView.getContext().getResources().getString(R.string.label_certificate_short) + " " + auto.getSeries() + " " + auto.getNumber());
+        holder.certificate.setText(res.getString(R.string.label_certificate_short, auto.getSeries(), auto.getNumber()));
         holder.description.setText(auto.getDescription());
-        holder.lastupdate.setText(auto.getLastupdate() != null ? holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + dateFormat.format(auto.getLastupdate()) : "" + holder.itemView.getContext().getResources().getString(R.string.label_lastupdate) + " " + holder.itemView.getContext().getResources().getString(R.string.label_never));
-        if (getNewPenalties(auto.getPenalties()) > 0) {
-            holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size()) + " / " + holder.itemView.getContext().getResources().getString(R.string.label_new_penalties) + " " + getNewPenalties(auto.getPenalties()));
-            holder.penalties.setTextColor(Color.RED);
-        }
-        else {
-            holder.penalties.setText(holder.itemView.getContext().getResources().getString(R.string.label_penalties) + " " + (auto.getPenalties().size() > 0 ? auto.getPenalties().size() : 0));
-            holder.penalties.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.textGray));
-        }
+        holder.lastupdate.setText(auto.getLastupdate() != null ? res.getString(R.string.label_lastupdate) + " " + dateFormat.format(auto.getLastupdate()) : "" + res.getString(R.string.label_lastupdate) + " " + res.getString(R.string.label_never));
+        List<Penalty> penalties = auto.getPenalties();
+        int penalties_amt = penalties.size();
+        int new_penalties_amt = auto.getNewPenalties(penalties);
         if (auto.getImage().length > 0) {
-            RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(holder.itemView.getContext().getResources(), ImageUtils.convertBytesToImage(auto.getImage()));
+            RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(res, ImageUtils.convertBytesToImage(auto.getImage()));
             dr.setCornerRadius(25);
             holder.auto_image.setImageDrawable(dr);
         }
         else {
             holder.auto_image.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.empty_car));
+        }
+        if (new_penalties_amt > 0) {
+            holder.penalties.setTextColor(Color.RED);
+            holder.penalties.setText(res.getString(R.string.label_penalties_new, penalties_amt, new_penalties_amt));
+        }
+        else {
+            holder.penalties.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.textGray));
+            holder.penalties.setText(res.getString(R.string.label_penalties, penalties_amt));
         }
 
         //get penalties for this auto
@@ -107,16 +114,6 @@ public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, Auto
             autoClickListener.editAutoClick(auto.getId());
             notifyItemChanged(position);
         }
-    }
-
-    private int getNewPenalties(List<Penalty> penalties){
-        int sum = 0;
-        for (Penalty penalty : penalties){
-            if (!penalty.isChecked()){
-                sum++;
-            }
-        }
-        return sum;
     }
 
     class AutoViewHolder extends RecyclerView.ViewHolder {

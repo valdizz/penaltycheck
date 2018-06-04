@@ -42,7 +42,7 @@
             android:textColor="@color/textDark"
             android:textSize="@dimen/text_big"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/payment_button"
             app:layout_constraintStart_toStartOf="@+id/label_resolutionnumber"
             app:layout_constraintTop_toBottomOf="@+id/label_resolutionnumber"
             tools:text="123456789" />
@@ -77,11 +77,13 @@
             android:id="@+id/payment_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:alpha="0.54"
             android:background="@null"
             android:padding="@dimen/button_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_action_creditcard" />
 
     </android.support.constraint.ConstraintLayout>

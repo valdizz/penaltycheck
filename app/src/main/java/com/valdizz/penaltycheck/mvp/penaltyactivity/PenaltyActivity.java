@@ -19,6 +19,7 @@ import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
+import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
@@ -72,7 +73,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     private void initHeader(long auto_id){
         Auto auto = realmService.getAuto(auto_id);
         tvPFullname.setText(auto.getFullName());
-        tvPCertificate.setText(getString(R.string.label_certificate_short)+" "+auto.getFullDoc());
+        tvPCertificate.setText(getString(R.string.label_certificate_short, auto.getSeries(), auto.getNumber()));
         tvPDescription.setText(auto.getDescription());
     }
 
@@ -106,7 +107,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     //show help
     @Override
     public void showHelp() {
-        //todo
+        startActivity(new Intent(this, HelpActivity.class));
     }
 
     @Override

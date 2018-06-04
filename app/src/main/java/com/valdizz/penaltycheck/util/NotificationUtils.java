@@ -40,8 +40,9 @@ public class NotificationUtils extends ContextWrapper {
             NotificationChannel channel = new NotificationChannel(CHECK_PENALTY_CHANNEL_ID, CHECK_PENALTY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(CHECK_PENALTY_CHANNEL_DESCRIPTION);
             channel.enableLights(true);
-            channel.enableVibration(true);
             channel.setLightColor(Color.RED);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{1000, 1, 500, 1, 1000, 1, 500});
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             getManager().createNotificationChannel(channel);
         }
@@ -55,8 +56,6 @@ public class NotificationUtils extends ContextWrapper {
                 .setTicker(getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count))
                 .setSmallIcon(R.mipmap.ic_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.empty_car))
-                .setLights(Color.RED, 2, 1)
-                .setVibrate(new long[]{1000, 1, 500, 1, 1000, 1, 500})
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getQuantityString(R.plurals.dialog_numberofpenalties, (int)count, (int)count)))
                 .setContentIntent(getContentIntent())
                 .setAutoCancel(true);

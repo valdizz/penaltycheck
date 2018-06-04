@@ -13,7 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:padding="@dimen/default_padding_8"
-        app:layoutManager="LinearLayoutManager"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context="com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity"
         tools:listitem="@layout/item_auto"/>
 

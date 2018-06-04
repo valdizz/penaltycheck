@@ -16,7 +16,7 @@ public class PenaltyFragmentPresenter implements PenaltyFragmentContract.Present
 
     @Override
     public void onPayPenaltyClick(Penalty penalty) {
-        //todo
+        penaltyFragmentView.showPayment(penalty);
     }
 
     @Override

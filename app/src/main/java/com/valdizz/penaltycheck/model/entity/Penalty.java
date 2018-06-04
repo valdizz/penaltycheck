@@ -1,8 +1,5 @@
 package com.valdizz.penaltycheck.model.entity;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import io.realm.RealmObject;
 
 public class Penalty extends RealmObject {

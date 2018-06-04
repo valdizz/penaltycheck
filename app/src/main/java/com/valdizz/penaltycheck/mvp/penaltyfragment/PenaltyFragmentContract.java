@@ -7,7 +7,7 @@ import com.valdizz.penaltycheck.mvp.common.BasePresenter;
 public interface PenaltyFragmentContract {
 
     interface View{
-
+        void showPayment(Penalty penalty);
     }
 
     interface Presenter extends BasePresenter{

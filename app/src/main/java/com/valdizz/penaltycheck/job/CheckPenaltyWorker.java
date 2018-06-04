@@ -21,15 +21,15 @@ import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.Worker;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 import static com.valdizz.penaltycheck.PenaltyCheckApplication.TAG;
 
 public class CheckPenaltyWorker extends Worker implements NetworkServiceListener {
 
-    private Disposable disposable;
-    @Inject
-    NetworkService networkService;
+    private CompositeDisposable disposables;
+    @Inject NetworkService networkService;
 
     public CheckPenaltyWorker() {
         Log.d(TAG, "constructor!");
@@ -39,13 +39,18 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
     @NonNull
     @Override
     public WorkerResult doWork() {
-        Log.d(TAG, "doWork!");
+        Log.d(TAG, "doWork1");
         if (CheckPermissionsUtils.isOnline(getApplicationContext())){
-            Log.d(TAG, "doWork!!!!!");
+            Log.d(TAG, "doWork2");
             RealmService realmService = new RealmService();
             try {
                 List<Auto> autos = realmService.getAutos(true);
-                disposable = networkService.checkPenalty(this, autos);
+                if (autos.size()==0) {
+                    return WorkerResult.SUCCESS;
+                }
+                Log.d(TAG, "doWork3");
+                disposables = new CompositeDisposable();
+                disposables.add(networkService.checkPenalty(this, autos));
             } catch (Exception e) {
                 Log.d(TAG, "FAILURE:" + e.getLocalizedMessage());
                 return WorkerResult.FAILURE;
@@ -70,13 +75,15 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
             Notification notification = notificationUtils.getNotification(count);
             notificationUtils.getManager().notify(NotificationUtils.NOTIFY_ID, notification);
         }
-        disposable.dispose();
+        if (disposables.size()>0)
+            disposables.dispose();
     }
 
     @Override
-    public void onErrorRequest(String error) {
+    public void onErrorRequest(String error) { ;
         Log.d(TAG, "onErrorRequest!");
-        disposable.dispose();
+        if (disposables.size()>0)
+            disposables.dispose();
     }
 
     public static PeriodicWorkRequest getCheckPenaltyWork() {

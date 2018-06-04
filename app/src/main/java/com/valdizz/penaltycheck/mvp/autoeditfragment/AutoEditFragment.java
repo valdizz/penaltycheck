@@ -68,7 +68,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.auto_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_autoedit, container, false);
         PenaltyCheckApplication.getComponent().injectAutoEditFragment(this);
         ButterKnife.bind(this, view);
 

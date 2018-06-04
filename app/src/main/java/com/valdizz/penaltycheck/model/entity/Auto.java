@@ -1,6 +1,7 @@
 package com.valdizz.penaltycheck.model.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -102,6 +103,14 @@ public class Auto extends RealmObject {
 
     public RealmList<Penalty> getPenalties() {
         return penalties;
+    }
+
+    public int getNewPenalties(List<Penalty> penaltyList) {
+        int sum = 0;
+        for (Penalty penalty : penaltyList)
+            if (!penalty.isChecked())
+                sum++;
+        return sum;
     }
 
     public void setPenalties(RealmList<Penalty> penalties) {

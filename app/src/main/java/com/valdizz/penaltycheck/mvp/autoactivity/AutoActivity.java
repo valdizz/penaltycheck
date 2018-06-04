@@ -23,14 +23,13 @@ import com.valdizz.penaltycheck.adapter.RecyclerItemTouchHelper;
 import com.valdizz.penaltycheck.adapter.RecyclerViewEmptyObserver;
 import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
-import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.mvp.autoeditfragment.AutoEditFragment;
+import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyactivity.PenaltyActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -186,7 +185,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     //show help
     @Override
     public void showHelp() {
-        //todo
+        startActivity(new Intent(this, HelpActivity.class));
     }
 
     @Override

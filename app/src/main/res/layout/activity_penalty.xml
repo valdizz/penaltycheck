@@ -37,26 +37,28 @@
                 android:padding="@dimen/default_padding_4">
 
                 <TextView
+                    android:id="@+id/tvPDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Шкода Суперб"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"/>
+
+                <TextView
                     android:id="@+id/tvPFullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/default_padding_16"
-                    android:text="ОСТРЕЙКО ВЛАДИМИР ВЕНИАМИНОВИЧ"
-                    android:textStyle="bold" />
+                    android:text="ИВАНОВ ВЛАДИМИР ВЕНИАМИНОВИЧ"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvPCertificate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/default_padding_16"
-                    android:text="САА 987987"
-                    android:textStyle="bold" />
+                    android:text="САА 987987" />
 
-                <TextView
-                    android:id="@+id/tvPDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Шкода октавиа 1564 АА-4 мой ласточка" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

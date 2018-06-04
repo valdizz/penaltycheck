@@ -12,6 +12,7 @@ import io.realm.Realm;
 public class RealmService {
 
     public static final String AUTOID_PARAM = "auto_id";
+    public static final String PENALTYID_PARAM = "penalty_id";
     public static final String GOOGLEPLAY_URI = "market://details?id=com.valdizz.penaltycheck";
 
     private final Realm realm;
