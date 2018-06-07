@@ -22,32 +22,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/payment_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_payment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding_8" />
-            <TextView
-                android:id="@+id/tv_payment_site"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:linksClickable="true"
-                android:text="@string/link_epay"
-                android:paddingLeft="@dimen/default_padding_8"
-                android:paddingRight="@dimen/default_padding_8"
-                android:paddingBottom="@dimen/default_padding_8"/>
-        </LinearLayout>
+        android:layout_height="match_parent">
 
-    </ScrollView>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/payment_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabMode="fixed"/>
+
+    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

@@ -28,7 +28,7 @@ import static com.valdizz.penaltycheck.PenaltyCheckApplication.TAG;
 
 public class CheckPenaltyWorker extends Worker implements NetworkServiceListener {
 
-    private CompositeDisposable disposables;
+    //private CompositeDisposable disposables;
     @Inject NetworkService networkService;
 
     public CheckPenaltyWorker() {
@@ -49,8 +49,9 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
                     return WorkerResult.SUCCESS;
                 }
                 Log.d(TAG, "doWork3");
-                disposables = new CompositeDisposable();
-                disposables.add(networkService.checkPenalty(this, autos));
+                //disposables = new CompositeDisposable();
+                //disposables.add(networkService.checkPenalty(this, autos));
+                networkService.checkPenalty(this, autos);
             } catch (Exception e) {
                 Log.d(TAG, "FAILURE:" + e.getLocalizedMessage());
                 return WorkerResult.FAILURE;
@@ -75,15 +76,15 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
             Notification notification = notificationUtils.getNotification(count);
             notificationUtils.getManager().notify(NotificationUtils.NOTIFY_ID, notification);
         }
-        if (disposables.size()>0)
-            disposables.dispose();
+//        if (disposables.size()>0)
+//            disposables.dispose();
     }
 
     @Override
     public void onErrorRequest(String error) { ;
         Log.d(TAG, "onErrorRequest!");
-        if (disposables.size()>0)
-            disposables.dispose();
+//        if (disposables.size()>0)
+//            disposables.dispose();
     }
 
     public static PeriodicWorkRequest getCheckPenaltyWork() {

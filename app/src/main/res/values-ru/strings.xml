@@ -92,5 +92,10 @@
 - на 20-30 км/ч – 2 базовые величины;\n
 - на 30-40 км/ч – 4 базовые величины;\n
 - более 40 км/ч – 6 базовых величин.</string>
-    <string name="link_epay">\u0020Оплатить можно тут: https://e-pay.by/</string>
+    <string name="label_tab_info">ИНФОРМАЦИЯ</string>
+    <string name="label_tab_payment">ОПЛАТА</string>
+    <string name="label_inetpay">Оплата через интернет</string>
+    <string name="label_ibankpay">Оплата через интернет-банкинг</string>
+    <string name="label_penaltynumber">Номер постановления о вынесении штрафа</string>
+    <string name="label_penaltynumber_clip">Номер постановления скопирован в буфер!</string>
 </resources>

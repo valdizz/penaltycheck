@@ -27,7 +27,7 @@
     <string name="label_never">never</string>
     <string name="dialog_autoexists">Auto with this certificate already exists!</string>
     <string name="title_activity_penalty">Penalty</string>
-    <string name="label_resolutionnumber">Number of Resolution:</string>
+    <string name="label_resolutionnumber">Number of resolution:</string>
     <string name="label_penaltydate">Date of the offense:</string>
     <string name="dialog_deletepenalty">Delete penalty?</string>
     <string name="dialog_controlauto">Surname, name, series and number of registration certificate must be filled!</string>
@@ -82,7 +82,7 @@ If a copy of the decision on imposing an administrative penalty by mail was not 
 \n
 To pay a penalty in the "Calculation" system (ERIP), you must select: \n
 1) Ministry of Internal Affairs -> Penalties -> SAI -> Photo speed fixation (service no. 381141); \n
-2) enter the registration number of the offense (11 digits):%1$s; \n
+        2) enter the registration number of the offense (11 digits):%1$s; \n
 3) check the data on the offense (the surname, name, patronymic of the owner of the vehicle and the amount of the penalty); \n
 4) make a payment. \n
 \n
@@ -93,5 +93,35 @@ Dimensions of penalties for violations detected by speed sensors: \n
 - 20-30 km/h - 2 base values; \n
 - 30-40 km/h - 4 base units; \n
 - more than 40 km/h - 6 base units.</string>
-    <string name="link_epay">\u0020You can pay here: https://e-pay.by/</string>
+    <string name="label_tab_payment">PAYMENT</string>
+    <string name="label_tab_info">INFO</string>
+    <string name="label_inetpay">Payment via Internet</string>
+    <string name="label_ibankpay">Payment via Internet banking</string>
+    <string name="link_epay" translatable="false">e-pay.by</string>
+    <string name="link_ipay" translatable="false">ipay.by</string>
+    <string name="link_webpay" translatable="false">belqi.by</string>
+    <string name="link_ibank_apb" translatable="false">ibank.belapb.by</string>
+    <string name="link_ibank_asb" translatable="false">ibank.asb.by</string>
+    <string name="link_ibank_bsb" translatable="false">24.bsb.by</string>
+    <string name="link_ibank_veb" translatable="false">belveb24.by</string>
+    <string name="link_ibank_bnb" translatable="false">bs.imbanking.by</string>
+    <string name="link_ibank_mtb" translatable="false">mybank.by</string>
+    <string name="link_ibank_bps" translatable="false">i.bps-sberbank.by</string>
+    <string name="link_ibank_prt" translatable="false">ibank.paritetbank.by</string>
+    <string name="link_ibank_stb" translatable="false">stb24.by</string>
+    <string name="link_ibank_mmb" translatable="false">online.mmbank.by</string>
+    <string name="link_ibank_pri" translatable="false">prior.by/web</string>
+    <string name="link_ibank_alf" translatable="false">click.alfa-bank.by</string>
+    <string name="link_ibank_vtb" translatable="false">i.i-vtb.by</string>
+    <string name="link_ibank_ztb" translatable="false">ib.zepterbank.by</string>
+    <string name="link_ibank_bgb" translatable="false">www.e-bgpb.by</string>
+    <string name="link_ibank_bta" translatable="false">bta.by</string>
+    <string name="link_ibank_teh" translatable="false">it.tb.by</string>
+    <string name="link_ibank_ide" translatable="false">ideabank24.by</string>
+    <string name="link_ibank_frb" translatable="false">ibank.fransabank.by</string>
+    <string name="link_ibank_bib" translatable="false">ibank.belinvestbank.by</string>
+    <string name="link_ibank_rrb" translatable="false">sbsibank.by/rrb</string>
+    <string name="link_ibank_reb" translatable="false">tbank.rbank.by</string>
+    <string name="label_penaltynumber">Number of penalty resolution</string>
+    <string name="label_penaltynumber_clip">Number of resolution copied to the buffer!</string>
 </resources>

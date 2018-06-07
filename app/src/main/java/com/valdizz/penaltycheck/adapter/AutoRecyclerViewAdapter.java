@@ -26,6 +26,7 @@ import com.valdizz.penaltycheck.util.ImageUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class AutoRecyclerViewAdapter extends RealmRecyclerViewAdapter<Auto, AutoRecyclerViewAdapter.AutoViewHolder>  implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy  HH:mm");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm", Locale.getDefault());
     private OnAutoClickListener autoClickListener;
 
     public AutoRecyclerViewAdapter(OrderedRealmCollection<Auto> data) {
