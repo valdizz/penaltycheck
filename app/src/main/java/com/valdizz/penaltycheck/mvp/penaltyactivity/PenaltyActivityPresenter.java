@@ -47,11 +47,6 @@ public class PenaltyActivityPresenter implements PenaltyActivityContract.Present
     }
 
     @Override
-    public void onRateAppClick() {
-        penaltyActivityView.showRateApp();
-    }
-
-    @Override
     public void onHelpClick() {
         penaltyActivityView.showHelp();
     }

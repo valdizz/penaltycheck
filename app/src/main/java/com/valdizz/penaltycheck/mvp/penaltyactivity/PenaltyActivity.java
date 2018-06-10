@@ -98,12 +98,6 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
         }
     }
 
-    //rate app
-    @Override
-    public void showRateApp() {
-        startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(GOOGLEPLAY_URI)));
-    }
-
     //show help
     @Override
     public void showHelp() {
@@ -147,9 +141,6 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
                 return true;
             case R.id.action_help:
                 penaltyActivityPresenter.onHelpClick();
-                return true;
-            case R.id.action_rate:
-                penaltyActivityPresenter.onRateAppClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

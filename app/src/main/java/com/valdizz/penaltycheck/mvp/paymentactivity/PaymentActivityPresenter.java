@@ -9,11 +9,6 @@ public class PaymentActivityPresenter implements PaymentActivityContract.Present
     }
 
     @Override
-    public void onRateAppClick() {
-        paymentActivityView.showRateApp();
-    }
-
-    @Override
     public void onHelpClick() {
         paymentActivityView.showHelp();
     }

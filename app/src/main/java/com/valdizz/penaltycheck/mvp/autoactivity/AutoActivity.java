@@ -176,12 +176,6 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
         }
     }
 
-    //rate app
-    @Override
-    public void showRateApp() {
-        startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(GOOGLEPLAY_URI)));
-    }
-
     //show help
     @Override
     public void showHelp() {
@@ -213,25 +207,21 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item_check = menu.findItem(R.id.action_check);
         MenuItem item_help = menu.findItem(R.id.action_help);
-        MenuItem item_rate = menu.findItem(R.id.action_rate);
         MenuItem item_save = menu.findItem(R.id.action_save);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.auto_detail_container);
         if (fragment != null && fragment instanceof AutoEditFragment){
             item_check.setVisible(false);
             item_help.setVisible(false);
-            item_rate.setVisible(false);
             item_save.setVisible(true);
         }
         else if (fragment != null && fragment instanceof PenaltyFragment){
             item_check.setVisible(false);
             item_help.setVisible(true);
-            item_rate.setVisible(true);
             item_save.setVisible(false);
     }
         else {
             item_check.setVisible(true);
             item_help.setVisible(true);
-            item_rate.setVisible(true);
             item_save.setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -246,9 +236,6 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
                 return true;
             case R.id.action_help:
                 autoActivityPresenter.onHelpClick();
-                return true;
-            case R.id.action_rate:
-                autoActivityPresenter.onRateAppClick();
                 return true;
             case R.id.action_save:
                 autoActivityPresenter.onSaveAutoClick();

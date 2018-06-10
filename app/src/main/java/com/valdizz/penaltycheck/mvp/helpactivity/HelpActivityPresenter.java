@@ -9,7 +9,12 @@ public class HelpActivityPresenter implements HelpActivityContract.Presenter {
     }
 
     @Override
+    public void onSendEmailClick() {
+        helpActivityView.sendEmail();
+    }
+
+    @Override
     public void onRateAppClick() {
-        helpActivityView.showRateApp();
+        helpActivityView.rateApp();
     }
 }

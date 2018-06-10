@@ -72,11 +72,6 @@ public class AutoActivityPresenter implements AutoActivityContract.Presenter, Ne
     }
 
     @Override
-    public void onRateAppClick() {
-        autoActivityView.showRateApp();
-    }
-
-    @Override
     public void onHelpClick() {
         autoActivityView.showHelp();
     }

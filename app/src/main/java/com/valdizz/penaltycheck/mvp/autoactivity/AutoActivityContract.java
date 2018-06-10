@@ -12,7 +12,6 @@ public interface AutoActivityContract {
         void showAddAuto();
         void showEditAuto(long id);
         void showPenalties(long id);
-        void showRateApp();
         void showHelp();
         void showRefreshing(boolean isRefresh);
         void showMessage(long count);
@@ -27,7 +26,6 @@ public interface AutoActivityContract {
         void onSaveAutoClick();
         void onGetPenalties(long id);
         void onCheckPenalties();
-        void onRateAppClick();
         void onHelpClick();
         void onDispose();
     }

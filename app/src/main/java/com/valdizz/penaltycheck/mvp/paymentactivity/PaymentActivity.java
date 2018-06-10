@@ -27,7 +27,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentActivit
     @BindView(R.id.payment_viewpager) ViewPager viewpagerPayment;
     @BindView(R.id.payment_tablayout) TabLayout tablayoutPayment;
     private PaymentActivityContract.Presenter paymentActivityPresenter;
-    private String penaltyNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +42,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentActivit
         if (paymentActivityPresenter == null){
             paymentActivityPresenter = new PaymentActivityPresenter(this);
         }
-        penaltyNumber = getIntent().getStringExtra(PENALTYID_PARAM);
+        String penaltyNumber = getIntent().getStringExtra(PENALTYID_PARAM);
         viewpagerPayment.setAdapter(new PaymentFragmentPagerAdapter(getSupportFragmentManager(), penaltyNumber, this));
-    }
-
-    @Override
-    public void showRateApp() {
-        startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(GOOGLEPLAY_URI)));
     }
 
     @Override
@@ -79,9 +73,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentActivit
                 return true;
             case R.id.action_help:
                 paymentActivityPresenter.onHelpClick();
-                return true;
-            case R.id.action_rate:
-                paymentActivityPresenter.onRateAppClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -7,7 +7,6 @@ import com.valdizz.penaltycheck.mvp.common.BasePresenter;
 public interface PenaltyActivityContract {
 
     interface View{
-        void showRateApp();
         void showHelp();
         void showRefreshing(boolean isRefresh);
         void showMessage(long count);
@@ -16,7 +15,6 @@ public interface PenaltyActivityContract {
 
     interface Presenter extends BasePresenter{
         void onCheckPenalties(long id);
-        void onRateAppClick();
         void onHelpClick();
         void onDispose();
     }
