@@ -2,6 +2,7 @@ package com.valdizz.penaltycheck.model;
 
 import android.util.Log;
 
+import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.model.entity.Auto;
 
 import org.json.JSONObject;
@@ -10,8 +11,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,11 +29,11 @@ import okhttp3.Response;
 
 public class NetworkService{
 
-    private static final String LOG_TAG_PCHECK = "penaltycheck_log";
     private static final String MVD_URL = "http://mvd.gov.by/Ajax.asmx/GetExt";
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String NO_PENALTY_MSG = "По заданным критериям поиска информация не найдена";
     private final OkHttpClient client = new OkHttpClient();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm", Locale.getDefault());
 
     private Request getRequest(Auto auto) throws Exception{
         JSONObject params = new JSONObject();
@@ -57,15 +60,15 @@ public class NetworkService{
                         .filter(Response::isSuccessful)
                         .map(response -> response.body().string())
                         .doOnNext(response_string -> {
-                            Log.d(LOG_TAG_PCHECK, "Save date: " + response_string + " / " + Thread.currentThread().getName());
+                            Log.d(PenaltyCheckApplication.TAG, "Save date: " + response_string + " / " + Thread.currentThread().getName());
                             saveLastCheckDate(auto);
                         })
-                        //.filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
+                        .filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
                         .doOnNext(response_string -> {
-                            Log.d(LOG_TAG_PCHECK, "Found penalty: " + response_string + " / " + Thread.currentThread().getName());
+                            Log.d(PenaltyCheckApplication.TAG, "Found penalty: " + response_string + " / " + Thread.currentThread().getName());
                             //parseAndSavePenalties(response_string, networkServiceListener, auto);
                             RealmService realmService = new RealmService();
-                            realmService.addPenalty(auto.getId(), new Date().toString(), response_string + Math.random());
+                            realmService.addPenalty(auto.getId(), dateFormat.format(new Date()), response_string);
                             realmService.closeRealm();
                         })
                 )
@@ -74,13 +77,13 @@ public class NetworkService{
                 .subscribeWith(new DisposableSingleObserver<Long>() {
                     @Override
                     public void onSuccess(Long count) {
-                        Log.d(LOG_TAG_PCHECK, "Request complete: " + count);
+                        Log.d(PenaltyCheckApplication.TAG, "Request complete: " + count);
                         networkServiceListener.onSuccessRequest(count);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(LOG_TAG_PCHECK, "Request error: " + e.getLocalizedMessage());
+                        Log.d(PenaltyCheckApplication.TAG, "Request error: " + e.getLocalizedMessage());
                         networkServiceListener.onErrorRequest(e.getLocalizedMessage());
                     }
                 });
