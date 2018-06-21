@@ -1,7 +1,6 @@
 package com.valdizz.penaltycheck.mvp.penaltyactivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.valdizz.penaltycheck.model.RealmService.AUTOID_PARAM;
-import static com.valdizz.penaltycheck.model.RealmService.GOOGLEPLAY_URI;
 
 public class PenaltyActivity extends AppCompatActivity implements PenaltyActivityContract.View {
 
@@ -128,7 +126,6 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_check).setVisible(false);
-        menu.findItem(R.id.action_save).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 

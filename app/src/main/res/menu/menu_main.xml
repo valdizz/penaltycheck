@@ -15,10 +15,4 @@
         android:orderInCategory="2"
         android:title="@string/action_help"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_save"
-        android:icon="@drawable/ic_check"
-        android:orderInCategory="3"
-        android:title="@android:string/ok"
-        app:showAsAction="always" />
 </menu>

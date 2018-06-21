@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ImageUtils {
 
@@ -50,7 +51,7 @@ public class ImageUtils {
     }
 
     public static File createImageFile(Context context) throws IOException {
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "MyAuto_" + timeStamp;
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, ".jpg", storageDir);

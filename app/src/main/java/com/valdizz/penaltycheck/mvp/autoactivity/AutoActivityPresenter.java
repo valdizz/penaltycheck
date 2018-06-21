@@ -1,16 +1,10 @@
 package com.valdizz.penaltycheck.mvp.autoactivity;
 
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.NetworkServiceListener;
 import com.valdizz.penaltycheck.model.RealmService;
-import com.valdizz.penaltycheck.model.entity.Auto;
 
-import java.util.Date;
-import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -41,11 +35,6 @@ public class AutoActivityPresenter implements AutoActivityContract.Presenter, Ne
     @Override
     public void onEditAutoClick(long id) {
         autoActivityView.showEditAuto(id);
-    }
-
-    @Override
-    public void onSaveAutoClick() {
-        autoActivityView.saveAuto();
     }
 
     @Override

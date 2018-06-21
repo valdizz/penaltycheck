@@ -1,17 +1,16 @@
 package com.valdizz.penaltycheck.mvp.autoactivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -24,7 +23,6 @@ import com.valdizz.penaltycheck.adapter.RecyclerViewEmptyObserver;
 import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
-import com.valdizz.penaltycheck.mvp.autoeditfragment.AutoEditFragment;
 import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyactivity.PenaltyActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
@@ -38,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.valdizz.penaltycheck.model.RealmService.AUTOID_PARAM;
-import static com.valdizz.penaltycheck.model.RealmService.GOOGLEPLAY_URI;
+
 
 public class AutoActivity extends AppCompatActivity implements AutoActivityContract.View, AutoRecyclerViewAdapter.OnAutoClickListener {
 
@@ -48,10 +46,11 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     @BindView(R.id.recyclerview_auto_isempty) LinearLayout emptyView;
     @BindView(R.id.swiperefresh_auto) SwipeRefreshLayout swipeRefreshLayout;
     private boolean mTwoPane;
-    private AutoRecyclerViewAdapter recyclerViewAdapter;
     @Inject RealmService realmService;
     @Inject NetworkService networkService;
     private AutoActivityContract.Presenter autoActivityPresenter;
+    private AutoRecyclerViewAdapter recyclerViewAdapter;
+    private PenaltyFragment penaltyFragment;
 
 
     @Override
@@ -73,6 +72,12 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
 
         swipeRefreshLayout.setOnRefreshListener(swiperefreshListener);
         setupAutoRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -101,13 +106,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
 
     @Override
     public void showAddAuto() {
-        if (mTwoPane){
-            getSupportFragmentManager().beginTransaction().replace(R.id.auto_detail_container, new AutoEditFragment()).addToBackStack(null).commit();
-        }
-        else {
-            startActivity(new Intent(this, AutoEditActivity.class));
-        }
-        invalidateOptionsMenu();
+        startActivity(new Intent(this, AutoEditActivity.class));
     }
 
     //edit auto
@@ -118,29 +117,17 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
 
     @Override
     public void showEditAuto(long id) {
-        if (mTwoPane){
-            Bundle arguments = new Bundle();
-            arguments.putLong(AUTOID_PARAM, id);
-            AutoEditFragment autoEditFragment = new AutoEditFragment();
-            autoEditFragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction().replace(R.id.auto_detail_container, autoEditFragment).addToBackStack(null).commit();
-        }
-        else {
-            startActivity(new Intent(this, AutoEditActivity.class).putExtra(AUTOID_PARAM, id));
-        }
-        invalidateOptionsMenu();
+        startActivity(new Intent(this, AutoEditActivity.class).putExtra(AUTOID_PARAM, id));
     }
 
     //delete auto
     @Override
     public void deleteAutoClick(long id) {
         autoActivityPresenter.onDeleteAutoClick(id);
-    }
-
-    @Override
-    public void saveAuto() {
-        AutoEditFragment autoEditFragment = (AutoEditFragment) getSupportFragmentManager().findFragmentById(R.id.auto_detail_container);
-        autoEditFragment.onSaveAutoClick();
+        if (mTwoPane){
+            getSupportFragmentManager().beginTransaction().remove(penaltyFragment).commit();
+        }
+        invalidateOptionsMenu();
     }
 
     //get penalties for this auto
@@ -154,7 +141,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
         if (mTwoPane){
             Bundle arguments = new Bundle();
             arguments.putLong(AUTOID_PARAM, id);
-            PenaltyFragment penaltyFragment = new PenaltyFragment();
+            penaltyFragment = new PenaltyFragment();
             penaltyFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction().replace(R.id.auto_detail_container, penaltyFragment).commit();
         }
@@ -168,7 +155,8 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
 
     private void checkPenalties(){
         if (CheckPermissionsUtils.isOnline(this)){
-            autoActivityPresenter.onCheckPenalties();
+            if (recyclerViewAdapter.getItemCount()>0)
+                autoActivityPresenter.onCheckPenalties();
         }
         else {
             showRefreshing(false);
@@ -207,23 +195,11 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item_check = menu.findItem(R.id.action_check);
         MenuItem item_help = menu.findItem(R.id.action_help);
-        MenuItem item_save = menu.findItem(R.id.action_save);
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.auto_detail_container);
-        if (fragment != null && fragment instanceof AutoEditFragment){
-            item_check.setVisible(false);
-            item_help.setVisible(false);
-            item_save.setVisible(true);
-        }
-        else if (fragment != null && fragment instanceof PenaltyFragment){
-            item_check.setVisible(false);
-            item_help.setVisible(true);
-            item_save.setVisible(false);
-    }
-        else {
+        if (recyclerViewAdapter.getItemCount()>0)
             item_check.setVisible(true);
-            item_help.setVisible(true);
-            item_save.setVisible(false);
-        }
+        else
+            item_check.setVisible(false);
+        item_help.setVisible(true);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -236,9 +212,6 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
                 return true;
             case R.id.action_help:
                 autoActivityPresenter.onHelpClick();
-                return true;
-            case R.id.action_save:
-                autoActivityPresenter.onSaveAutoClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

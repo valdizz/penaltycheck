@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,12 +20,13 @@
             android:layout_alignParentTop="true"
             android:src="@drawable/empty_car" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/auto_image_button"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:background="@drawable/ic_add_a_photo"
+            app:srcCompat="@drawable/ic_add_a_photo"
             android:layout_alignRight="@id/auto_image"
+            android:layout_alignEnd="@id/auto_image"
             android:layout_alignBottom="@id/auto_image"
             android:padding="@dimen/button_padding"/>
 

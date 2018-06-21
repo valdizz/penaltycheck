@@ -60,7 +60,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentActivit
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_check).setVisible(false);
-        menu.findItem(R.id.action_save).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 

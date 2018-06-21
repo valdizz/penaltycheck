@@ -29,10 +29,11 @@
             tools:listitem="@layout/item_auto" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/auto_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_weight="3" />
 
 </LinearLayout>

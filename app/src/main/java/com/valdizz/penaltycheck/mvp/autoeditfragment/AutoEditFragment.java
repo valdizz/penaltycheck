@@ -19,9 +19,8 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
@@ -54,7 +53,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     @BindView(R.id.etDescription) TextInputEditText etDescription;
     @BindView(R.id.switchAutocheck) SwitchCompat switchAutocheck;
     @BindView(R.id.auto_image) ImageView autoImage;
-    @BindView(R.id.auto_image_button) ImageButton autoImageButton;
+    @BindView(R.id.auto_image_button) ImageView autoImageButton;
     @Inject RealmService realmService;
     private AutoEditFragmentContract.Presenter autoEditFragmentPresenter;
 
@@ -87,12 +86,12 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
             switchAutocheck.setChecked(auto.isAutomatically());
             if (auto.getImage().length > 0) {
                 autoImage.setImageBitmap(ImageUtils.convertBytesToImage(auto.getImage()));
-                autoImageButton.setBackgroundResource(R.drawable.ic_clear);
+                autoImageButton.setImageResource(R.drawable.ic_clear);
                 autoImageButton.setTag(true);
             }
             else {
                 autoImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.empty_car));
-                autoImageButton.setBackgroundResource(R.drawable.ic_add_a_photo);
+                autoImageButton.setImageResource(R.drawable.ic_add_a_photo);
                 autoImageButton.setTag(false);
             }
         }
@@ -105,10 +104,9 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
             etDescription.setText(null);
             switchAutocheck.setChecked(false);
             autoImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.empty_car));
-            autoImageButton.setBackgroundResource(R.drawable.ic_add_a_photo);
+            autoImageButton.setImageResource(R.drawable.ic_add_a_photo);
             autoImageButton.setTag(false);
         }
-
         return view;
     }
 
@@ -129,7 +127,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                     .setView(dialog_image_view);
             final AlertDialog dialog_image = builder.create();
 
-            TextView dialog_camera = dialog_image_view.findViewById(R.id.dialog_camera);
+            LinearLayout dialog_camera = dialog_image_view.findViewById(R.id.dialog_camera);
             dialog_camera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -140,7 +138,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                     }
                 }
             });
-            TextView dialog_gallery = dialog_image_view.findViewById(R.id.dialog_gallery);
+            LinearLayout dialog_gallery = dialog_image_view.findViewById(R.id.dialog_gallery);
             dialog_gallery.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -181,7 +179,6 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
                 currentPhotoPath = photoFile.getAbsolutePath();
             } catch (IOException e) {
                 Snackbar.make(switchAutocheck, getString(R.string.error_createimage), Snackbar.LENGTH_LONG).show();
-                //e.printStackTrace();
             }
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.valdizz.fileprovider", photoFile);
@@ -238,14 +235,14 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     @Override
     public void showCarPhoto(Bitmap bitmap) {
         autoImage.setImageBitmap(bitmap);
-        autoImageButton.setBackgroundResource(R.drawable.ic_clear);
+        autoImageButton.setImageResource(R.drawable.ic_clear);
         autoImageButton.setTag(true);
     }
 
     @Override
     public void deleteCarPhoto() {
         autoImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.empty_car));
-        autoImageButton.setBackgroundResource(R.drawable.ic_add_a_photo);
+        autoImageButton.setImageResource(R.drawable.ic_add_a_photo);
         autoImageButton.setTag(false);
     }
 
@@ -285,11 +282,7 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
 
     @Override
     public void onClose() {
-        if (getActivity() instanceof AutoEditActivity) {
-            getActivity().finish();
-        } else {
-            getFragmentManager().beginTransaction().remove(this).commit();
-        }
+        getActivity().finish();
     }
 
 }

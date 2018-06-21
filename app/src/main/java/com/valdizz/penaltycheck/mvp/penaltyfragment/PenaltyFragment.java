@@ -95,4 +95,5 @@ public class PenaltyFragment extends Fragment implements PenaltyFragmentContract
     public void viewPenaltyClick(Penalty penalty) {
         penaltyFragmentPresenter.onViewPenaltyClick(penalty);
     }
+
 }

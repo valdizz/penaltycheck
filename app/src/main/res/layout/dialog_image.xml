@@ -4,32 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="left">
+    android:gravity="start">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/dialog_camera"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_camera"
-        android:drawableStart="@drawable/ic_camera"
-        android:drawablePadding="12dp"
-        android:paddingTop="8dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:text="@string/dialog_camera" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_camera"
+            android:layout_gravity="center"
+            android:paddingLeft="24dp"
+            android:paddingStart="24dp"
+            android:paddingRight="12dp"
+            android:paddingEnd="12dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingRight="24dp"
+            android:paddingEnd="24dp"
+            android:text="@string/dialog_camera" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dialog_gallery"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_gallery"
-        android:drawableStart="@drawable/ic_gallery"
-        android:drawablePadding="12dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:text="@string/dialog_gallery" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_gallery"
+            android:layout_gravity="center"
+            android:paddingLeft="24dp"
+            android:paddingStart="24dp"
+            android:paddingRight="12dp"
+            android:paddingEnd="12dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingRight="24dp"
+            android:paddingEnd="24dp"
+            android:text="@string/dialog_gallery" />
+    </LinearLayout>
 
 </LinearLayout>

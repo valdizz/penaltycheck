@@ -16,6 +16,7 @@ import com.valdizz.penaltycheck.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.valdizz.penaltycheck.model.RealmService.PENALTYID_PARAM;
 
@@ -37,16 +38,15 @@ public class PaymentPayFragment extends Fragment {
         if (getArguments() != null)
             penaltyNumber = getArguments().getString(PENALTYID_PARAM);
         tvPenaltyNumber.setText(penaltyNumber);
-        tvPenaltyNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager)view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText(CLIP_LABEL, tvPenaltyNumber.getText());
-                clipboard.setPrimaryClip(clip);
-                Snackbar.make(view, getString(R.string.label_penaltynumber_clip), Snackbar.LENGTH_SHORT).show();
-            }
-        });
         return view;
+    }
+
+    @OnClick(R.id.iv_penaltynumbercopy)
+    void onPenaltyNumberCopyClick(){
+        ClipboardManager clipboard = (ClipboardManager)getView().getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(CLIP_LABEL, tvPenaltyNumber.getText());
+        clipboard.setPrimaryClip(clip);
+        Snackbar.make(getView(), getString(R.string.label_penaltynumber_clip), Snackbar.LENGTH_SHORT).show();
     }
 
 }

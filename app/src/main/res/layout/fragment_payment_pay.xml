@@ -31,16 +31,36 @@
                 android:layout_marginTop="3dp"
                 android:background="@android:color/darker_gray"/>
 
-            <TextView
-                android:id="@+id/tv_penaltynumber"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold|italic"
-                android:textColor="@color/textDark"
-                android:drawableRight="@drawable/ic_content_copy"
-                android:drawableEnd="@drawable/ic_content_copy"
-                android:drawablePadding="6dp"/>
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/tv_penaltynumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:textColor="@color/textDark"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_penaltynumbercopy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="123456789098" />
+
+                <ImageView
+                    android:id="@+id/iv_penaltynumbercopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_content_copy" />
+
+            </android.support.constraint.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.valdizz.penaltycheck.BuildConfig;
@@ -23,8 +24,6 @@ import static com.valdizz.penaltycheck.model.RealmService.MAILTO;
 public class HelpActivity extends AppCompatActivity implements HelpActivityContract.View {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.tv_rateapp) TextView tvRateApp;
-    @BindView(R.id.tv_sendemail) TextView tvSendEmail;
     @BindView(R.id.tv_appversion) TextView tvAppVersion;
     private HelpActivityContract.Presenter helpActivityPresenter;
 
@@ -45,12 +44,12 @@ public class HelpActivity extends AppCompatActivity implements HelpActivityContr
         tvAppVersion.setText(getString(R.string.label_version, BuildConfig.VERSION_NAME));
     }
 
-    @OnClick(R.id.tv_sendemail)
+    @OnClick(R.id.ll_sendemail)
     void onSendEmailClick(){
         helpActivityPresenter.onSendEmailClick();
     }
 
-    @OnClick(R.id.tv_rateapp)
+    @OnClick(R.id.ll_rateapp)
     void onRateAppClick(){
         helpActivityPresenter.onRateAppClick();
     }

@@ -74,50 +74,82 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/tv_appversion"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_appversion"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_version"
-                android:drawablePadding="7dp"
-                android:textColor="@color/textDark"
-                android:text="@string/label_version" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_version"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_appversion"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="7dp"
+                    android:paddingStart="7dp"
+                    android:textColor="@color/textDark"
+                    android:text="@string/label_version" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/tv_rateapp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_rateapp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_rate_app"
-                android:drawablePadding="7dp"
-                android:textColor="@color/textDark"
-                android:text="@string/label_rateapp" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_rate_app"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="7dp"
+                    android:paddingStart="7dp"
+                    android:textColor="@color/textDark"
+                    android:text="@string/label_rateapp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/tv_sendemail"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_sendemail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="7dp"
-                android:textColor="@color/textDark"
-                android:text="@string/label_sendemail" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_email"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="7dp"
+                    android:paddingStart="7dp"
+                    android:textColor="@color/textDark"
+                    android:text="@string/label_sendemail" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

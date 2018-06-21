@@ -16,14 +16,12 @@ public interface AutoActivityContract {
         void showRefreshing(boolean isRefresh);
         void showMessage(long count);
         void showErrorMessage(String error);
-        void saveAuto();
     }
 
     interface Presenter extends BasePresenter{
         void onAddAutoClick();
         void onDeleteAutoClick(long id);
         void onEditAutoClick(long id);
-        void onSaveAutoClick();
         void onGetPenalties(long id);
         void onCheckPenalties();
         void onHelpClick();

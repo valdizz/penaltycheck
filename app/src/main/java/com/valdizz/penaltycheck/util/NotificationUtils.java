@@ -39,10 +39,6 @@ public class NotificationUtils extends ContextWrapper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHECK_PENALTY_CHANNEL_ID, CHECK_PENALTY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(CHECK_PENALTY_CHANNEL_DESCRIPTION);
-            channel.enableLights(true);
-            channel.setLightColor(Color.RED);
-            channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{1000, 1, 500, 1, 1000, 1, 500});
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             getManager().createNotificationChannel(channel);
         }
@@ -50,7 +46,7 @@ public class NotificationUtils extends ContextWrapper {
 
     public Notification getNotification(long count) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHECK_PENALTY_CHANNEL_ID)
-                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDefaults(Notification.DEFAULT_ALL)
                 .setContentTitle(getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count))
                 .setContentText(getResources().getQuantityString(R.plurals.dialog_numberofpenalties, (int)count, (int)count))
                 .setTicker(getResources().getQuantityString(R.plurals.dialog_penaltyfound, (int)count, (int)count))

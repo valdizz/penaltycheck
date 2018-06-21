@@ -7,10 +7,8 @@ import com.valdizz.penaltycheck.dagger.AppComponent;
 import com.valdizz.penaltycheck.dagger.DaggerAppComponent;
 import com.valdizz.penaltycheck.job.CheckPenaltyWorker;
 
-import java.util.List;
 
 import androidx.work.WorkManager;
-import androidx.work.WorkStatus;
 import io.realm.Realm;
 
 public class PenaltyCheckApplication extends Application {
