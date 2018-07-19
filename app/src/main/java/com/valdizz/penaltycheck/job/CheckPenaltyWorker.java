@@ -9,6 +9,7 @@ import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.NetworkServiceListener;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
+import com.valdizz.penaltycheck.util.CheckHost;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 import com.valdizz.penaltycheck.util.NotificationUtils;
 
@@ -21,7 +22,6 @@ import androidx.work.Constraints;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.Worker;
-
 
 
 public class CheckPenaltyWorker extends Worker implements NetworkServiceListener {
@@ -37,29 +37,39 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
     @Override
     public Worker.Result doWork() {
         Log.d(PenaltyCheckApplication.TAG, "Worker starts!");
-        if (CheckPermissionsUtils.isOnline(getApplicationContext())){
-            RealmService realmService = new RealmService();
-            try {
-                List<Auto> autos = realmService.getAutos(true);
-                if (autos.size()==0) {
-                    return Result.SUCCESS;
-                }
-                Log.d(PenaltyCheckApplication.TAG, "Worker works!");
-                networkService.checkPenalty(this, autos);
-            } catch (Exception e) {
-                Log.d(PenaltyCheckApplication.TAG, "Worker fails: " + e.getLocalizedMessage());
-                return Result.FAILURE;
-            }
-            finally {
-                realmService.closeRealm();
-            }
-            Log.d(PenaltyCheckApplication.TAG, "Worker success!");
-            return Result.SUCCESS;
-        }
-        else {
+        if (!CheckPermissionsUtils.isOnline(getApplicationContext())){
             Log.d(PenaltyCheckApplication.TAG, "Worker retry!");
             return Result.RETRY;
         }
+
+        boolean hostAvailable = false;
+        try {
+            hostAvailable = new CheckHost(isHostAvailable -> {}).get();
+        } catch (Exception ignored) {
+        }
+
+        if (!hostAvailable) {
+            Log.d(PenaltyCheckApplication.TAG, "Worker retry!");
+            return Result.RETRY;
+        }
+
+        RealmService realmService = new RealmService();
+        try {
+            List<Auto> autos = realmService.getAutos(true);
+            if (autos.size()==0) {
+                return Result.SUCCESS;
+            }
+            Log.d(PenaltyCheckApplication.TAG, "Worker works!");
+            networkService.checkPenalty(this, autos);
+        } catch (Exception e) {
+            Log.d(PenaltyCheckApplication.TAG, "Worker fails: " + e.getLocalizedMessage());
+            return Result.FAILURE;
+        }
+        finally {
+            realmService.closeRealm();
+        }
+        Log.d(PenaltyCheckApplication.TAG, "Worker success!");
+        return Result.SUCCESS;
     }
 
     @Override

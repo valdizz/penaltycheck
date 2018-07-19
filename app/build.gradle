@@ -7,8 +7,8 @@ android {
         applicationId "com.valdizz.penaltycheck"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.4"
         project.ext.set("archivesBaseName", "penaltycheck-" + defaultConfig.versionName);
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.google.dagger:dagger:2.14.1'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'android.arch.work:work-runtime:1.0.0-alpha03'
+    implementation 'android.arch.work:work-runtime:1.0.0-alpha04'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'org.jsoup:jsoup:1.11.3'

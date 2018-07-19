@@ -14,16 +14,16 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-public class CheckPermissionsUtils {
+
+public class CheckPermissionsUtils{
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    public static final String MVD_URL_HOST = "http://mvd.gov.by/";
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static boolean checkPermissionReadExternalStorage(final Context context)
-    {
+    public static boolean checkPermissionReadExternalStorage(final Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
-        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
-        {
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
@@ -52,7 +52,8 @@ public class CheckPermissionsUtils {
 
     public static boolean isOnline(final Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        NetworkInfo networkInfo = cm != null ? cm.getActiveNetworkInfo() : null;
         return (networkInfo != null && networkInfo.isConnectedOrConnecting());
     }
+
 }

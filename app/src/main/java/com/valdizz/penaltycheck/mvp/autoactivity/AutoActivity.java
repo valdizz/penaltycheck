@@ -26,6 +26,7 @@ import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyactivity.PenaltyActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
+import com.valdizz.penaltycheck.util.CheckHost;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
 
@@ -151,17 +152,24 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     }
 
     //check penalties
-    private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = () -> checkPenalties();
+    private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = this::checkPenalties;
 
     private void checkPenalties(){
-        if (CheckPermissionsUtils.isOnline(this)){
-            if (recyclerViewAdapter.getItemCount()>0)
-                autoActivityPresenter.onCheckPenalties();
-        }
-        else {
+        if (!CheckPermissionsUtils.isOnline(this)){
             showRefreshing(false);
             Snackbar.make(swipeRefreshLayout, getString(R.string.dialog_checkinternet), Snackbar.LENGTH_LONG).show();
+            return;
         }
+        new CheckHost(isHostAvailable -> {
+            if (isHostAvailable){
+                if (recyclerViewAdapter.getItemCount()>0)
+                    autoActivityPresenter.onCheckPenalties();
+            }
+            else {
+                showRefreshing(false);
+                Snackbar.make(fab, getString(R.string.dialog_checkhost), Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     //show help

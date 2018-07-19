@@ -11,16 +11,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,23 +54,41 @@ public class NetworkService{
     }
 
     private Observable<Response> makeRequest(final Auto auto) {
-        return Observable.fromCallable(() -> client.newCall(getRequest(auto)).execute());
+        //return Observable.fromCallable(() -> client.newCall(getRequest(auto)).execute());
+        return Observable.create(emitter -> {
+            Call call = client.newCall(getRequest(auto));
+            emitter.setCancellable(call::cancel);
+            call.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d(PenaltyCheckApplication.TAG, "Request complete: " + response.toString());
+                    emitter.onNext(response);
+                    emitter.onComplete();
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(PenaltyCheckApplication.TAG, "Request error: " + e.getLocalizedMessage());
+                    emitter.tryOnError(e);
+                }
+            });
+        });
     }
 
     public Disposable checkPenalty(NetworkServiceListener networkServiceListener, List<Auto> autos) {
         return Observable
                 .fromIterable(autos)
                 .flatMap(auto -> makeRequest(auto)
-                        .subscribeOn(Schedulers.io())
+                        //.subscribeOn(Schedulers.io())
                         .filter(Response::isSuccessful)
                         .map(response -> response.body().string())
                         .doOnNext(response_string -> {
-                            Log.d(PenaltyCheckApplication.TAG, "Save date: " + response_string + " / " + Thread.currentThread().getName());
+                            Log.d(PenaltyCheckApplication.TAG, "Request (save date): " + response_string);
                             saveLastCheckDate(auto);
                         })
                         .filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
                         .doOnNext(response_string -> {
-                            Log.d(PenaltyCheckApplication.TAG, "Found penalty: " + response_string + " / " + Thread.currentThread().getName());
+                            Log.d(PenaltyCheckApplication.TAG, "Request (found penalty): " + response_string);
                             //parseAndSavePenalties(response_string, networkServiceListener, auto);
                             RealmService realmService = new RealmService();
                             realmService.addPenalty(auto.getId(), dateFormat.format(new Date()), response_string);
@@ -77,13 +100,13 @@ public class NetworkService{
                 .subscribeWith(new DisposableSingleObserver<Long>() {
                     @Override
                     public void onSuccess(Long count) {
-                        Log.d(PenaltyCheckApplication.TAG, "Request complete: " + count);
+                        Log.d(PenaltyCheckApplication.TAG, "All requests is complete: " + count);
                         networkServiceListener.onSuccessRequest(count);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(PenaltyCheckApplication.TAG, "Request error: " + e.getLocalizedMessage());
+                        Log.d(PenaltyCheckApplication.TAG, "All requests complete with error: " + e.getLocalizedMessage());
                         networkServiceListener.onErrorRequest(e.getLocalizedMessage());
                     }
                 });

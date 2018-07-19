@@ -107,4 +107,5 @@ Dimensions of penalties for violations detected by speed sensors: \n
     <string name="label_sendemail">Write to the developer by e-mail</string>
     <string name="label_rateapp">Rate app</string>
     <string name="label_howto">How to use the application</string>
+    <string name="dialog_checkhost">Host not available!</string>
 </resources>
