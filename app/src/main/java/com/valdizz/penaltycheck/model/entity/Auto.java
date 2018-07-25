@@ -105,9 +105,9 @@ public class Auto extends RealmObject {
         return penalties;
     }
 
-    public int getNewPenalties(List<Penalty> penaltyList) {
+    public int getNewPenalties() {
         int sum = 0;
-        for (Penalty penalty : penaltyList)
+        for (Penalty penalty : penalties)
             if (!penalty.isChecked())
                 sum++;
         return sum;
@@ -119,10 +119,6 @@ public class Auto extends RealmObject {
 
     public String getFullName() {
         return surname + " " + name + " " + patronymic;
-    }
-
-    public String getFullDoc() {
-        return series + " " + number;
     }
 
 }

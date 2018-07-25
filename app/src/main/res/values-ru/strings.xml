@@ -25,8 +25,8 @@
     <string name="label_penalties">Штрафы: %1$d</string>
     <string name="label_never">никогда</string>
     <string name="dialog_autoexists">Авто с этим сертификатом уже существует!</string>
-    <string name="label_resolutionnumber">Номер постановления:</string>
-    <string name="label_penaltydate">Дата правонарушения:</string>
+    <string name="label_resolutionnumber">Регистрационный номер правонарушения:</string>
+    <string name="label_penaltydate">Дата и время правонарушения:</string>
     <string name="title_activity_penalty">Штрафы</string>
     <string name="dialog_deletepenalty">Удалить штраф?</string>
     <string name="dialog_controlauto">Фамилия, имя, серия и номер свидетельства о регистрации должны быть заполнены!</string>
@@ -72,8 +72,8 @@
     <string name="label_tab_payment">ОПЛАТА</string>
     <string name="label_inetpay">Оплата через интернет</string>
     <string name="label_ibankpay">Оплата через интернет-банкинг</string>
-    <string name="label_penaltynumber">Номер постановления о вынесении штрафа</string>
-    <string name="label_penaltynumber_clip">Номер постановления скопирован в буфер!</string>
+    <string name="label_penaltynumber">Регистрационный номер правонарушения</string>
+    <string name="label_penaltynumber_clip">Регистрационный номер скопирован в буфер!</string>
     <string name="label_rateapp">Оценить приложение</string>
     <string name="label_version">Версия приложения: %1$s</string>
     <string name="label_about">О приложении</string>

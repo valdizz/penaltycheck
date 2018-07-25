@@ -1,5 +1,7 @@
 package com.valdizz.penaltycheck.model;
 
+import android.support.annotation.NonNull;
+
 import com.valdizz.penaltycheck.model.entity.Auto;
 import com.valdizz.penaltycheck.model.entity.Penalty;
 
@@ -35,7 +37,7 @@ public class RealmService {
         if (isAutochecked)
             autos = realm.where(Auto.class).equalTo("automatically", true).findAll().sort("id");
         else
-            autos = realm.where(Auto.class).findAllAsync().sort("id");
+            autos = realm.where(Auto.class).findAll().sort("id");
         return realm.copyFromRealm(autos);
     }
 
@@ -47,7 +49,7 @@ public class RealmService {
     public void addAuto(final String surname, final String name, final String patronymic, final String series, final String number, final String description, final boolean autocheck, final byte[] image) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 Number maxValue = realm.where(Auto.class).max("id");
                 long pk = (maxValue != null) ? (long) maxValue + 1 : 1;
                 Auto auto = realm.createObject(Auto.class, pk);
@@ -66,7 +68,7 @@ public class RealmService {
     public void updateAuto(final long id, final String surname, final String name, final String patronymic, final String series, final String number, final String description, final boolean autocheck, final byte[] image) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 Auto auto = realm.where(Auto.class).equalTo("id", id).findFirst();
                 auto.setSurname(surname);
                 auto.setName(name);
@@ -83,7 +85,7 @@ public class RealmService {
     public void updateLastCheckDateAuto(final long id, final Date lastupdate) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 Auto auto = realm.where(Auto.class).equalTo("id", id).findFirst();
                 auto.setLastupdate(lastupdate);
             }
@@ -93,7 +95,7 @@ public class RealmService {
     public void deleteAuto(final long id) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 Auto auto = realm.where(Auto.class).equalTo("id", id).findFirst();
                 auto.deleteFromRealm();
             }
@@ -109,14 +111,18 @@ public class RealmService {
     }
 
     public void addPenalty(final long id, final String date, final String number) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 Penalty penalty = realm.createObject(Penalty.class);
                 penalty.setDate(date);
                 penalty.setNumber(number);
-                if (!realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().contains(penalty))
+                if (realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().contains(penalty)){
+                    penalty.deleteFromRealm();
+                }
+                else {
                     realm.where(Auto.class).equalTo("id", id).findFirst().getPenalties().add(penalty);
+                }
             }
         });
     }
@@ -124,7 +130,7 @@ public class RealmService {
     public void deletePenalty(final Penalty penalty) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 penalty.deleteFromRealm();
             }
         });
@@ -133,9 +139,10 @@ public class RealmService {
     public void viewPenalty(final Penalty penalty) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(@NonNull Realm realm) {
                 penalty.setChecked(true);
             }
         });
     }
+
 }

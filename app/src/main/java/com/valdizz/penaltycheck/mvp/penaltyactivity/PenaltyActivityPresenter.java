@@ -1,16 +1,12 @@
 package com.valdizz.penaltycheck.mvp.penaltyactivity;
 
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.NetworkServiceListener;
 import com.valdizz.penaltycheck.model.RealmService;
-import com.valdizz.penaltycheck.model.entity.Auto;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Collections;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -31,7 +27,7 @@ public class PenaltyActivityPresenter implements PenaltyActivityContract.Present
     @Override
     public void onCheckPenalties(long id) {
         penaltyActivityView.showRefreshing(true);
-        disposables.add(networkService.checkPenalty(this, Arrays.asList(realmService.getAuto(id))));
+        disposables.add(networkService.checkPenalty(this, Collections.singletonList(realmService.getAuto(id))));
     }
 
     @Override

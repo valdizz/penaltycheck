@@ -63,7 +63,7 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
             networkService.checkPenalty(this, autos);
         } catch (Exception e) {
             Log.d(PenaltyCheckApplication.TAG, "Worker fails: " + e.getLocalizedMessage());
-            return Result.FAILURE;
+            return Result.RETRY;
         }
         finally {
             realmService.closeRealm();

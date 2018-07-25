@@ -10,20 +10,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -32,15 +26,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class NetworkService{
+public class NetworkService {
 
     private static final String MVD_URL = "http://mvd.gov.by/Ajax.asmx/GetExt";
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String NO_PENALTY_MSG = "По заданным критериям поиска информация не найдена";
     private final OkHttpClient client = new OkHttpClient();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm", Locale.getDefault());
 
-    private Request getRequest(Auto auto) throws Exception{
+
+    private Request getRequest(Auto auto) throws Exception {
         JSONObject params = new JSONObject();
         params.put("GuidControl", 2091);
         params.put("Param1", auto.getFullName());
@@ -54,7 +48,6 @@ public class NetworkService{
     }
 
     private Observable<Response> makeRequest(final Auto auto) {
-        //return Observable.fromCallable(() -> client.newCall(getRequest(auto)).execute());
         return Observable.create(emitter -> {
             Call call = client.newCall(getRequest(auto));
             emitter.setCancellable(call::cancel);
@@ -68,7 +61,7 @@ public class NetworkService{
 
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(PenaltyCheckApplication.TAG, "Request error: " + e.getLocalizedMessage());
+                    Log.e(PenaltyCheckApplication.TAG, "Request error: " + e.getLocalizedMessage());
                     emitter.tryOnError(e);
                 }
             });
@@ -79,20 +72,16 @@ public class NetworkService{
         return Observable
                 .fromIterable(autos)
                 .flatMap(auto -> makeRequest(auto)
-                        //.subscribeOn(Schedulers.io())
                         .filter(Response::isSuccessful)
                         .map(response -> response.body().string())
-                        .doOnNext(response_string -> {
-                            Log.d(PenaltyCheckApplication.TAG, "Request (save date): " + response_string);
+                        .doOnNext(responseString -> {
+                            Log.d(PenaltyCheckApplication.TAG, "Request (save date): " + responseString);
                             saveLastCheckDate(auto);
                         })
-                        .filter(response_string -> !response_string.contains(NO_PENALTY_MSG))
-                        .doOnNext(response_string -> {
-                            Log.d(PenaltyCheckApplication.TAG, "Request (found penalty): " + response_string);
-                            //parseAndSavePenalties(response_string, networkServiceListener, auto);
-                            RealmService realmService = new RealmService();
-                            realmService.addPenalty(auto.getId(), dateFormat.format(new Date()), response_string);
-                            realmService.closeRealm();
+                        .filter(responseString -> !responseString.contains(NO_PENALTY_MSG))
+                        .doOnNext(responseString -> {
+                            Log.d(PenaltyCheckApplication.TAG, "Request (found penalty): " + responseString);
+                            parseAndSavePenalties(responseString, auto);
                         })
                 )
                 .count()
@@ -100,29 +89,37 @@ public class NetworkService{
                 .subscribeWith(new DisposableSingleObserver<Long>() {
                     @Override
                     public void onSuccess(Long count) {
-                        Log.d(PenaltyCheckApplication.TAG, "All requests is complete: " + count);
-                        networkServiceListener.onSuccessRequest(count);
+                        long newPenalties = 0;
+                        if (count > 0) {
+                            RealmService realmService = new RealmService();
+                            for (Auto auto : autos) {
+                                newPenalties = newPenalties + realmService.getAuto(auto.getId()).getNewPenalties();
+                            }
+                            realmService.closeRealm();
+                        }
+                        Log.d(PenaltyCheckApplication.TAG, "All requests is complete: " + count + "/" + newPenalties);
+                        networkServiceListener.onSuccessRequest(newPenalties);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(PenaltyCheckApplication.TAG, "All requests complete with error: " + e.getLocalizedMessage());
+                        Log.e(PenaltyCheckApplication.TAG, "All requests complete with error: " + e.getLocalizedMessage());
                         networkServiceListener.onErrorRequest(e.getLocalizedMessage());
                     }
                 });
     }
 
-    private void saveLastCheckDate(Auto auto){
+    private void saveLastCheckDate(Auto auto) {
         RealmService realmService = new RealmService();
         realmService.updateLastCheckDateAuto(auto.getId(), new Date());
         realmService.closeRealm();
     }
 
-    private void parseAndSavePenalties(String response, NetworkServiceListener networkServiceListener, Auto auto){
+    private void parseAndSavePenalties(String response, Auto auto) {
         RealmService realmService = new RealmService();
         Document table = Jsoup.parse(response);
         Elements rows = table.select("tr");
-        for (int i = 1; i < rows.size(); i++){
+        for (int i = 1; i < rows.size(); i++) {
             Elements cols = rows.get(i).select("td");
             realmService.addPenalty(auto.getId(), cols.get(3).text(), cols.get(4).text());
         }

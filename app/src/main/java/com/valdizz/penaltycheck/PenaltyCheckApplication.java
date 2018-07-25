@@ -7,9 +7,7 @@ import com.valdizz.penaltycheck.dagger.AppComponent;
 import com.valdizz.penaltycheck.dagger.DaggerAppComponent;
 import com.valdizz.penaltycheck.job.CheckPenaltyWorker;
 
-
 import java.io.IOException;
-import java.net.SocketException;
 
 import androidx.work.WorkManager;
 import io.reactivex.exceptions.UndeliverableException;
@@ -36,7 +34,6 @@ public class PenaltyCheckApplication extends Application {
 
     private void initWorkManager(){
         WorkManager.getInstance().cancelAllWorkByTag(TAG);
-        Log.d(TAG, "WorkerManager cancels all works!");
         WorkManager.getInstance().enqueue(CheckPenaltyWorker.getCheckPenaltyWork());
         Log.d(TAG, "WorkerManager starts: " + WorkManager.getInstance().getStatusesByTag(TAG));
     }
@@ -45,7 +42,7 @@ public class PenaltyCheckApplication extends Application {
         RxJavaPlugins.setErrorHandler(e -> {
             if (e instanceof UndeliverableException) {
                 e = e.getCause();
-                Log.d(PenaltyCheckApplication.TAG, "Undeliverable exception received", e);
+                Log.e(PenaltyCheckApplication.TAG, "Undeliverable exception received", e);
             }
             if (e instanceof IOException) {
                 // fine, irrelevant network problem or API that throws on cancellation
@@ -65,7 +62,7 @@ public class PenaltyCheckApplication extends Application {
                 Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 return;
             }
-            Log.d(PenaltyCheckApplication.TAG, "Undeliverable exception received, not sure what to do", e);
+            Log.e(PenaltyCheckApplication.TAG, "Undeliverable exception received, not sure what to do", e);
         });
     }
 }

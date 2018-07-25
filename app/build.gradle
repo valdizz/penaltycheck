@@ -7,8 +7,8 @@ android {
         applicationId "com.valdizz.penaltycheck"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
         project.ext.set("archivesBaseName", "penaltycheck-" + defaultConfig.versionName);
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
