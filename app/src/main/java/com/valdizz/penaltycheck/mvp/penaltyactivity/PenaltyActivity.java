@@ -94,7 +94,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
             return;
         }
         new CheckHost(isHostAvailable -> {
-            if (isHostAvailable){
+            if (isHostAvailable && penaltyActivityPresenter != null){
                 penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1));
             }
             else {

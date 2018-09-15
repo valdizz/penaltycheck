@@ -161,7 +161,7 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
             return;
         }
         new CheckHost(isHostAvailable -> {
-            if (isHostAvailable){
+            if (isHostAvailable && autoActivityPresenter != null){
                 if (recyclerViewAdapter.getItemCount()>0)
                     autoActivityPresenter.onCheckPenalties();
             }

@@ -5,7 +5,6 @@ import com.valdizz.penaltycheck.model.NetworkService;
 import com.valdizz.penaltycheck.model.NetworkServiceListener;
 import com.valdizz.penaltycheck.model.RealmService;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import io.reactivex.disposables.CompositeDisposable;

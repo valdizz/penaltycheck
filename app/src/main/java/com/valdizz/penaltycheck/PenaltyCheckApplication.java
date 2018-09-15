@@ -9,6 +9,7 @@ import com.valdizz.penaltycheck.job.CheckPenaltyWorker;
 
 import java.io.IOException;
 
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.WorkManager;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -33,8 +34,7 @@ public class PenaltyCheckApplication extends Application {
     }
 
     private void initWorkManager(){
-        WorkManager.getInstance().cancelAllWorkByTag(TAG);
-        WorkManager.getInstance().enqueue(CheckPenaltyWorker.getCheckPenaltyWork());
+        WorkManager.getInstance().enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.KEEP, CheckPenaltyWorker.getCheckPenaltyWork());
         Log.d(TAG, "WorkerManager starts: " + WorkManager.getInstance().getStatusesByTag(TAG));
     }
 
