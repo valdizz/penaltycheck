@@ -21,7 +21,6 @@ import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
 import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
-import com.valdizz.penaltycheck.util.CheckHost;
 
 import javax.inject.Inject;
 
@@ -89,18 +88,10 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     //check penalties for this auto
     @OnClick(R.id.fab)
     void checkPenaltiesClick(){
-        if (!CheckPermissionsUtils.isOnline(this)){
+        if (CheckPermissionsUtils.isOnline(this))
+            penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1));
+        else
             Snackbar.make(fab, getString(R.string.dialog_checkinternet), Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        new CheckHost(isHostAvailable -> {
-            if (isHostAvailable && penaltyActivityPresenter != null){
-                penaltyActivityPresenter.onCheckPenalties(getIntent().getLongExtra(AUTOID_PARAM, -1));
-            }
-            else {
-                Snackbar.make(fab, getString(R.string.dialog_checkhost), Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
     //show help

@@ -10,7 +10,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -26,7 +25,6 @@ import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyactivity.PenaltyActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
-import com.valdizz.penaltycheck.util.CheckHost;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
 
@@ -155,21 +153,13 @@ public class AutoActivity extends AppCompatActivity implements AutoActivityContr
     private SwipeRefreshLayout.OnRefreshListener swiperefreshListener = this::checkPenalties;
 
     private void checkPenalties(){
-        if (!CheckPermissionsUtils.isOnline(this)){
+        if (CheckPermissionsUtils.isOnline(this) && recyclerViewAdapter.getItemCount()>0){
+            autoActivityPresenter.onCheckPenalties();
+        }
+        else {
             showRefreshing(false);
             Snackbar.make(swipeRefreshLayout, getString(R.string.dialog_checkinternet), Snackbar.LENGTH_LONG).show();
-            return;
         }
-        new CheckHost(isHostAvailable -> {
-            if (isHostAvailable && autoActivityPresenter != null){
-                if (recyclerViewAdapter.getItemCount()>0)
-                    autoActivityPresenter.onCheckPenalties();
-            }
-            else {
-                showRefreshing(false);
-                Snackbar.make(fab, getString(R.string.dialog_checkhost), Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
     //show help

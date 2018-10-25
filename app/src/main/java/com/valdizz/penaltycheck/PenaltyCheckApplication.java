@@ -23,6 +23,7 @@ public class PenaltyCheckApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Stetho.initializeWithDefaults(this);
         Realm.init(this);
         component = DaggerAppComponent.create();
         initWorkManager();

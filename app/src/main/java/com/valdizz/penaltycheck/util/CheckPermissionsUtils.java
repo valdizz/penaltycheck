@@ -18,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 public class CheckPermissionsUtils{
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-    public static final String MVD_URL_HOST = "http://mvd.gov.by/";
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkPermissionReadExternalStorage(final Context context) {

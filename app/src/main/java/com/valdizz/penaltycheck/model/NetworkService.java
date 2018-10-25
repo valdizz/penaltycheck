@@ -5,9 +5,11 @@ import android.util.Log;
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.model.entity.Auto;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -53,7 +55,7 @@ public class NetworkService {
             emitter.setCancellable(call::cancel);
             call.enqueue(new Callback() {
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response) {
                     Log.d(PenaltyCheckApplication.TAG, "Request complete: " + response.toString());
                     emitter.onNext(response);
                     emitter.onComplete();
@@ -117,7 +119,9 @@ public class NetworkService {
 
     private void parseAndSavePenalties(String response, Auto auto) {
         RealmService realmService = new RealmService();
-        Document table = Jsoup.parse(response);
+        String response_html = StringEscapeUtils.unescapeJava(response);
+        Document doc = Jsoup.parse(response_html);
+        Element table = doc.select("table").first();
         Elements rows = table.select("tr");
         for (int i = 1; i < rows.size(); i++) {
             Elements cols = rows.get(i).select("td");
