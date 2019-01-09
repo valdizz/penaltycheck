@@ -77,11 +77,13 @@
                 android:background="@android:color/darker_gray"/>
 
             <LinearLayout
+                android:id="@+id/ll_epay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:minHeight="35dp">
+                android:minHeight="35dp"
+                android:orientation="horizontal"
+                android:tag="by.st.belqi|http://e-pay.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -90,23 +92,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_epay" />
+                    android:src="@drawable/logo_epay"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
+                    android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_epay" />
+                    android:text="@string/link_epay"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_ipay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:minHeight="35dp">
+                android:minHeight="35dp"
+                android:orientation="horizontal"
+                android:tag="com.besmart.ipay|http://ipay.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -115,23 +120,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_ipay" />
+                    android:src="@drawable/logo_ipay"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
+                    android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ipay" />
+                    android:text="@string/link_ipay"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_webpay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:minHeight="35dp">
+                android:minHeight="35dp"
+                android:orientation="horizontal"
+                android:tag="by.st.belqi|http://belqi.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -140,17 +148,17 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_webpay" />
+                    android:src="@drawable/logo_webpay"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
+                    android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_webpay" />
+                    android:text="@string/link_webpay"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -167,11 +175,13 @@
                 android:background="@android:color/darker_gray"/>
 
             <LinearLayout
+                android:id="@+id/ll_apbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.bapb|http://ibank.belapb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -180,23 +190,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_apb" />
+                    android:src="@drawable/logo_apb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
+                    android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_apb" />
+                    android:text="@string/link_ibank_apb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_asbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.mobicon.mbank2.belarusbank|http://ibank.asb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -205,23 +218,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_asb" />
+                    android:src="@drawable/logo_asb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
+                    android:paddingStart="8dp"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_asb" />
+                    android:text="@string/link_ibank_asb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bsbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.softteco.bsbank|http://24.bsb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -230,23 +246,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bsb" />
+                    android:src="@drawable/logo_bsb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bsb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bsb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_vebbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.belveb.belvebmobileplus|http://belveb24.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -255,23 +274,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_veb" />
+                    android:src="@drawable/logo_veb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_veb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_veb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bnbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.bnbbank|https://bs.imbanking.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -280,23 +302,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bnb" />
+                    android:src="@drawable/logo_bnb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bnb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bnb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_mtbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.mtbank|http://mybank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -305,23 +330,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_mtb" />
+                    android:src="@drawable/logo_mtb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_mtb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_mtb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bpsbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.bpssberbank.sbol|http://www.bps-sberbank.by/loginsbol">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -330,23 +358,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bps" />
+                    android:src="@drawable/logo_bps"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bps" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bps"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_prtbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.besmart.paritet|https://ibank.paritetbank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -355,23 +386,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_prt" />
+                    android:src="@drawable/logo_prt"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_prt" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_prt"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_stbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.besmart.evrotorg|http://stb24.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -380,23 +414,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_stb" />
+                    android:src="@drawable/logo_stb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_stb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_stb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_mmbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.mmbank|http://online.mmbank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -405,23 +442,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_mmb" />
+                    android:src="@drawable/logo_mmb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_mmb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_mmb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_pribank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.st.priormobile|http://prior.by/web">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -430,23 +470,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_pri" />
+                    android:src="@drawable/logo_pri"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_pri" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_pri"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_alfbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.alfabank.insync|http://click.alfa-bank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -455,23 +498,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_alf" />
+                    android:src="@drawable/logo_alf"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_alf" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_alf"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_vtbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.besmart.vtb|http://i.i-vtb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -480,23 +526,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_vtb" />
+                    android:src="@drawable/logo_vtb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_vtb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_vtb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_ztbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.zepterbank|http://ib.zepterbank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -505,23 +554,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_ztb" />
+                    android:src="@drawable/logo_ztb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_ztb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_ztb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bgpbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.bgpb.mbanking|https://www.e-bgpb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -530,23 +582,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bgb" />
+                    android:src="@drawable/logo_bgb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bgb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bgb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_btabank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.btabank|http://bta.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -555,23 +610,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bta" />
+                    android:src="@drawable/logo_bta"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bta" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bta"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_tehbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.tehnobank|https://it.tb.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -580,23 +638,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_teh" />
+                    android:src="@drawable/logo_teh"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_teh" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_teh"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_idebank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.ideabank|http://ideabank24.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -605,23 +666,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_ide" />
+                    android:src="@drawable/logo_ide"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_ide" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_ide"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_frbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="netiks.FransaBank.mobile|http://ibank.fransabank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -630,23 +694,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_frb" />
+                    android:src="@drawable/logo_frb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_frb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_frb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_bibbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="by.belinvestbank|http://ibank.belinvestbank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -655,23 +722,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_bib" />
+                    android:src="@drawable/logo_bib"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_bib" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_bib"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_rrbbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.rrb|http://sbsibank.by/rrb">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -680,23 +750,26 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_rrb" />
+                    android:src="@drawable/logo_rrb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_rrb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_rrb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_rebbank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="35dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:tag="com.alseda.solutionbank|http://ib.rbank.by">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -705,18 +778,19 @@
                     android:maxWidth="60dp"
                     android:padding="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo_reb" />
+                    android:src="@drawable/logo_reb"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:linksClickable="true"
                     android:paddingLeft="8dp"
-                    android:text="@string/link_ibank_reb" />
+                    android:paddingStart="8dp"
+                    android:text="@string/link_ibank_reb"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
+
         </LinearLayout>
-
 
     </ScrollView>
 

@@ -3,10 +3,12 @@ package com.valdizz.penaltycheck;
 import android.app.Application;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.valdizz.penaltycheck.dagger.AppComponent;
 import com.valdizz.penaltycheck.dagger.DaggerAppComponent;
 import com.valdizz.penaltycheck.job.CheckPenaltyWorker;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.IOException;
 
 import androidx.work.ExistingPeriodicWorkPolicy;
@@ -23,6 +25,7 @@ public class PenaltyCheckApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         //Stetho.initializeWithDefaults(this);
         Realm.init(this);
         component = DaggerAppComponent.create();
@@ -36,7 +39,7 @@ public class PenaltyCheckApplication extends Application {
 
     private void initWorkManager(){
         WorkManager.getInstance().enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.KEEP, CheckPenaltyWorker.getCheckPenaltyWork());
-        Log.d(TAG, "WorkerManager starts: " + WorkManager.getInstance().getStatusesByTag(TAG));
+        Log.d(TAG, "WorkerManager starts: " + WorkManager.getInstance().getWorkInfosByTag(TAG));
     }
 
     private void initRxErrorHandler(){

@@ -32,7 +32,7 @@
             android:name=".mvp.penaltyactivity.PenaltyActivity"
             android:label="@string/title_activity_penalty"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,6 +46,9 @@
 
         <activity android:name=".mvp.helpactivity.HelpActivity" />
         <activity android:name=".mvp.paymentactivity.PaymentActivity" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="8f2456a420ac387937739f18ec292cf8a891eeb7" />
     </application>
 
 </manifest>

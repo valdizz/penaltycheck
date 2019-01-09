@@ -25,12 +25,25 @@
             app:expandedTitleMarginStart="@dimen/default_padding_16"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <ImageView
+                android:id="@+id/ivAuto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/empty_car"
+                android:layout_gravity="end|bottom"
+                android:layout_marginRight="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="30dp"
+                tools:ignore="ContentDescription" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/default_padding_16"
                 android:layout_marginLeft="@dimen/default_padding_45"
+                android:layout_marginStart="@dimen/default_padding_45"
                 android:layout_marginRight="@dimen/default_padding_16"
+                android:layout_marginEnd="@dimen/default_padding_16"
                 android:layout_marginTop="@dimen/default_padding_8"
                 android:background="@color/cardview_shadow_start_color"
                 android:orientation="vertical"
@@ -40,25 +53,27 @@
                     android:id="@+id/tvPDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Шкода Суперб"
+                    tools:text="Шкода Суперб"
                     android:textSize="@dimen/text_big"
+                    android:maxLines="2"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvPFullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/default_padding_16"
-                    android:text="ИВАНОВ ВЛАДИМИР ВЕНИАМИНОВИЧ"
+                    android:layout_marginRight="88dp"
+                    android:layout_marginEnd="88dp"
+                    tools:text="РОМАНОВСКИЙ ВЛАДИМИРС ВЕНИАМИНОВИЧ"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvPCertificate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/default_padding_16"
-                    android:text="САА 987987" />
-
+                    android:layout_marginRight="88dp"
+                    android:layout_marginEnd="88dp"
+                    tools:text="Свидетельство: САА 987987" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar

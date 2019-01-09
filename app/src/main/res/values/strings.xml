@@ -72,32 +72,31 @@ Dimensions of penalties for violations detected by speed sensors: \n
     <string name="label_tab_payment">PAYMENT</string>
     <string name="label_tab_info">INFO</string>
     <string name="label_inetpay">Payment via Internet</string>
-    <string name="label_ibankpay">Payment via Internet banking</string>
-    <string name="link_epay" translatable="false">e-pay.by</string>
-    <string name="link_ipay" translatable="false">ipay.by</string>
-    <string name="link_webpay" translatable="false">belqi.by</string>
-    <string name="link_ibank_apb" translatable="false">ibank.belapb.by</string>
-    <string name="link_ibank_asb" translatable="false">ibank.asb.by</string>
-    <string name="link_ibank_bsb" translatable="false">24.bsb.by</string>
-    <string name="link_ibank_veb" translatable="false">belveb24.by</string>
-    <string name="link_ibank_bnb" translatable="false">bs.imbanking.by</string>
-    <string name="link_ibank_mtb" translatable="false">mybank.by</string>
-    <string name="link_ibank_bps" translatable="false">i.bps-sberbank.by</string>
-    <string name="link_ibank_prt" translatable="false">ibank.paritetbank.by</string>
-    <string name="link_ibank_stb" translatable="false">stb24.by</string>
-    <string name="link_ibank_mmb" translatable="false">online.mmbank.by</string>
-    <string name="link_ibank_pri" translatable="false">prior.by/web</string>
-    <string name="link_ibank_alf" translatable="false">click.alfa-bank.by</string>
-    <string name="link_ibank_vtb" translatable="false">i.i-vtb.by</string>
-    <string name="link_ibank_ztb" translatable="false">ib.zepterbank.by</string>
-    <string name="link_ibank_bgb" translatable="false">www.e-bgpb.by</string>
-    <string name="link_ibank_bta" translatable="false">bta.by</string>
-    <string name="link_ibank_teh" translatable="false">it.tb.by</string>
-    <string name="link_ibank_ide" translatable="false">ideabank24.by</string>
-    <string name="link_ibank_frb" translatable="false">ibank.fransabank.by</string>
-    <string name="link_ibank_bib" translatable="false">ibank.belinvestbank.by</string>
-    <string name="link_ibank_rrb" translatable="false">sbsibank.by/rrb</string>
-    <string name="link_ibank_reb" translatable="false">tbank.rbank.by</string>
+    <string name="label_ibankpay">Payment via Internet/Mobile banking</string>
+    <string name="link_epay" translatable="false">ePay</string>
+    <string name="link_ipay" translatable="false">iPay</string>
+    <string name="link_webpay" translatable="false">WebPay</string>
+    <string name="link_ibank_apb">Belagroprombank</string>
+    <string name="link_ibank_asb">Belarusbank</string>
+    <string name="link_ibank_bsb">BSB Bank</string>
+    <string name="link_ibank_veb">Bank BelVEB</string>
+    <string name="link_ibank_bnb">BNB Bank</string>
+    <string name="link_ibank_mtb">MTBank</string>
+    <string name="link_ibank_bps">BPS-Sberbank</string>
+    <string name="link_ibank_prt">Paritetbank</string>
+    <string name="link_ibank_stb">Statusbank</string>
+    <string name="link_ibank_mmb">Bank Moscow-Minsk</string>
+    <string name="link_ibank_alf">Alfa-Bank</string>
+    <string name="link_ibank_vtb">VTB Bank</string>
+    <string name="link_ibank_ztb">Zepter Bank</string>
+    <string name="link_ibank_bgb">Belgazprombank</string>
+    <string name="link_ibank_bta">BTA Bank</string>
+    <string name="link_ibank_teh">Technobank</string>
+    <string name="link_ibank_ide">Idea Bank</string>
+    <string name="link_ibank_frb">Fransabank</string>
+    <string name="link_ibank_bib">Belinvestbank</string>
+    <string name="link_ibank_rrb">RDB-Bank</string>
+    <string name="link_ibank_reb">Bank Reshenie</string>
     <string name="label_penaltynumber">Registration number of the offense</string>
     <string name="label_penaltynumber_clip">Registration number copied to the buffer!</string>
     <string name="label_about">About the application</string>
@@ -108,4 +107,9 @@ Dimensions of penalties for violations detected by speed sensors: \n
     <string name="label_rateapp">Rate app</string>
     <string name="label_howto">How to use the application</string>
     <string name="dialog_checkhost">Host not available!</string>
+    <string name="dialog_mobilebanking">Mobile banking</string>
+    <string name="dialog_internetbanking">Internet banking</string>
+    <string name="dialog_paymentoption">Payment option</string>
+    <string name="error_openurl">Can\'t open URL: %1$s</string>
+    <string name="link_ibank_pri">Priorbank</string>
 </resources>

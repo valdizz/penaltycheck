@@ -41,26 +41,26 @@ public class CheckPenaltyWorker extends Worker implements NetworkServiceListener
         Log.d(PenaltyCheckApplication.TAG, "Worker starts!");
         if (!CheckPermissionsUtils.isOnline(getApplicationContext())){
             Log.d(PenaltyCheckApplication.TAG, "Worker retry!");
-            return Result.RETRY;
+            return Result.retry();
         }
 
         RealmService realmService = new RealmService();
         try {
             List<Auto> autos = realmService.getAutos(true);
             if (autos.size()==0) {
-                return Result.SUCCESS;
+                return Result.success();
             }
             Log.d(PenaltyCheckApplication.TAG, "Worker works!");
             networkService.checkPenalty(this, autos);
         } catch (Exception e) {
             Log.d(PenaltyCheckApplication.TAG, "Worker fails: " + e.getLocalizedMessage());
-            return Result.RETRY;
+            return Result.retry();
         }
         finally {
             realmService.closeRealm();
         }
         Log.d(PenaltyCheckApplication.TAG, "Worker success!");
-        return Result.SUCCESS;
+        return Result.success();
     }
 
     @Override

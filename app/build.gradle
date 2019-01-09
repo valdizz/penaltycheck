@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'realm-android'
 
 android {
@@ -7,8 +22,8 @@ android {
         applicationId "com.valdizz.penaltycheck"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
         project.ext.set("archivesBaseName", "penaltycheck-" + defaultConfig.versionName);
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -39,7 +54,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.google.dagger:dagger:2.17'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'android.arch.work:work-runtime:1.0.0-alpha10'
+    implementation 'android.arch.work:work-runtime:1.0.0-beta01'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'org.jsoup:jsoup:1.11.3'
@@ -51,4 +66,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+        transitive = true;
+    }
 }

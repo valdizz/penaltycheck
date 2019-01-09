@@ -76,7 +76,8 @@
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_penalties"

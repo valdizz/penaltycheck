@@ -1,12 +1,14 @@
 package com.valdizz.penaltycheck.mvp.autoeditfragment;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,17 +18,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.valdizz.penaltycheck.PenaltyCheckApplication;
 import com.valdizz.penaltycheck.R;
 import com.valdizz.penaltycheck.model.RealmService;
 import com.valdizz.penaltycheck.model.entity.Auto;
-import com.valdizz.penaltycheck.mvp.autoeditactivity.AutoEditActivity;
 import com.valdizz.penaltycheck.util.ImageUtils;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
 
@@ -120,36 +123,30 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     @OnClick(R.id.auto_image_button)
     public void onPhotoClick() {
         if (!((Boolean) autoImageButton.getTag())) {
-            View dialog_image_view = getActivity().getLayoutInflater().inflate(R.layout.dialog_image, null);
+            View dialogImageView = getActivity().getLayoutInflater().inflate(R.layout.dialog_image, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                     .setCancelable(true)
                     .setTitle(getString(R.string.dialog_addfoto))
-                    .setView(dialog_image_view);
-            final AlertDialog dialog_image = builder.create();
+                    .setView(dialogImageView);
+            final AlertDialog dialogImage = builder.create();
 
-            LinearLayout dialog_camera = dialog_image_view.findViewById(R.id.dialog_camera);
-            dialog_camera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog_image.dismiss();
-                    userChoice = REQUEST_IMAGE_CAPTURE;
-                    if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
-                        autoEditFragmentPresenter.onShowCameraClick();
-                    }
+            LinearLayout llCamera = dialogImageView.findViewById(R.id.dialog_camera);
+            llCamera.setOnClickListener(view -> {
+                dialogImage.dismiss();
+                userChoice = REQUEST_IMAGE_CAPTURE;
+                if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
+                    autoEditFragmentPresenter.onShowCameraClick();
                 }
             });
-            LinearLayout dialog_gallery = dialog_image_view.findViewById(R.id.dialog_gallery);
-            dialog_gallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog_image.dismiss();
-                    userChoice = REQUEST_IMAGE_GALLERY;
-                    if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
-                        autoEditFragmentPresenter.onShowGalleryClick();
-                    }
+            LinearLayout llGallery = dialogImageView.findViewById(R.id.dialog_gallery);
+            llGallery.setOnClickListener(view -> {
+                dialogImage.dismiss();
+                userChoice = REQUEST_IMAGE_GALLERY;
+                if (CheckPermissionsUtils.checkPermissionReadExternalStorage(getActivity())) {
+                    autoEditFragmentPresenter.onShowGalleryClick();
                 }
             });
-            dialog_image.show();
+            dialogImage.show();
         }
         else {
             autoEditFragmentPresenter.onDeleteImageClick();
@@ -173,18 +170,21 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
     public void showCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            File photoFile = null;
+            Uri photoURI = null;
             try {
-                photoFile = ImageUtils.createImageFile(getActivity());
+                File photoFile = ImageUtils.createImageFile(getActivity());
                 currentPhotoPath = photoFile.getAbsolutePath();
+                photoURI = FileProvider.getUriForFile(getActivity(), "com.valdizz.fileprovider", photoFile);
             } catch (IOException e) {
+                Log.e(PenaltyCheckApplication.TAG, "Take picture error: "+e.getLocalizedMessage());
                 Snackbar.make(switchAutocheck, getString(R.string.error_createimage), Snackbar.LENGTH_LONG).show();
             }
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.valdizz.fileprovider", photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                intent.setClipData(ClipData.newRawUri("", photoURI));
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION|Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -203,29 +203,29 @@ public class AutoEditFragment extends Fragment implements AutoEditFragmentContra
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_IMAGE_CAPTURE:
-                    Bitmap bitmap_camera = null;
+                    Bitmap bitmapCamera = null;
                     try {
-                        bitmap_camera = ImageUtils.rotateImageIfRequired(BitmapFactory.decodeFile(currentPhotoPath), currentPhotoPath);
+                        bitmapCamera = ImageUtils.rotateImageIfRequired(BitmapFactory.decodeFile(currentPhotoPath), currentPhotoPath);
                     } catch (IOException e) {
                         Snackbar.make(switchAutocheck, getString(R.string.error_convertimage), Snackbar.LENGTH_LONG).show();
                         break;
                         //e.printStackTrace();
                     }
-                    Bitmap photo = ImageUtils.scaleImage(bitmap_camera, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));;
+                    Bitmap photo = ImageUtils.scaleImage(bitmapCamera, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));;
                     autoEditFragmentPresenter.onSelectFromCameraResult(photo);
                     break;
                 case REQUEST_IMAGE_GALLERY:
-                    Bitmap bitmap_gallery = null;
+                    Bitmap bitmapGallery = null;
                     if (data != null) {
                         try {
-                            bitmap_gallery= ImageUtils.rotateImageIfRequired(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData()), data.getData());
+                            bitmapGallery= ImageUtils.rotateImageIfRequired(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData()), data.getData());
                         } catch (IOException e) {
                             Snackbar.make(switchAutocheck, getString(R.string.error_convertimage), Snackbar.LENGTH_LONG).show();
                             break;
                             //e.printStackTrace();
                         }
                     }
-                    Bitmap image = ImageUtils.scaleImage(bitmap_gallery, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));
+                    Bitmap image = ImageUtils.scaleImage(bitmapGallery, ImageUtils.dpToPx(getActivity(), ImageUtils.IMAGE_MAX_SIDE));
                     autoEditFragmentPresenter.onSelectFromGalleryResult(image);
                     break;
             }

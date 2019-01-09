@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.valdizz.penaltycheck.mvp.autoactivity.AutoActivity;
 import com.valdizz.penaltycheck.mvp.helpactivity.HelpActivity;
 import com.valdizz.penaltycheck.mvp.penaltyfragment.PenaltyFragment;
 import com.valdizz.penaltycheck.util.CheckPermissionsUtils;
+import com.valdizz.penaltycheck.util.ImageUtils;
 
 import javax.inject.Inject;
 
@@ -38,6 +43,7 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
     @BindView(R.id.tvPCertificate) TextView tvPCertificate;
     @BindView(R.id.tvPDescription) TextView tvPDescription;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.ivAuto) ImageView ivAuto;
     @Inject RealmService realmService;
     @Inject NetworkService networkService;
     private PenaltyActivityContract.Presenter penaltyActivityPresenter;
@@ -73,6 +79,14 @@ public class PenaltyActivity extends AppCompatActivity implements PenaltyActivit
         tvPFullname.setText(auto.getFullName());
         tvPCertificate.setText(getString(R.string.label_certificate_short, auto.getSeries(), auto.getNumber()));
         tvPDescription.setText(auto.getDescription());
+        if (auto.getImage().length > 0) {
+            RoundedBitmapDrawable dr = RoundedBitmapDrawableFactory.create(getResources(), ImageUtils.convertBytesToImage(auto.getImage()));
+            dr.setCornerRadius(25);
+            ivAuto.setImageDrawable(dr);
+        }
+        else {
+            ivAuto.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.empty_car));
+        }
     }
 
     private void addFragment(Intent intent){
